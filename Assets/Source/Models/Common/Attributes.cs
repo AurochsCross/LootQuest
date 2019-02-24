@@ -1,4 +1,7 @@
+using System;
+
 namespace Models.Common {
+    [Serializable]
     public class Attributes {
         public int strength { get; private set; }
         public int dexterity { get; private set; }

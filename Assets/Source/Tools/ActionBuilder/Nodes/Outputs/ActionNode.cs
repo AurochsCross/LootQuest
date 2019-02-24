@@ -16,7 +16,9 @@ namespace Tools.ActionBuilder.Nodes {
 
         protected override void Init() {
             base.Init();
-            this.AddInstanceInput(typeof(ActionEffect), ConnectionType.Override, TypeConstraint.Inherited, "0");
+            if (this.GetInputPort("0") == null) {
+                this.AddInstanceInput(typeof(ActionEffect), ConnectionType.Override, TypeConstraint.Inherited, "0");
+            }
         }
 
         public void AddNewPort() {

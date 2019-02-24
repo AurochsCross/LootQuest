@@ -6,12 +6,23 @@ using System.Linq;
 namespace Logic.Player.Commanders {
     public class EquipmentCommander {
         public List<Item> inventory { get; private set; } = new List<Item>();
-        Dictionary<ArmorType, ArmorItem> armor = emptyArmor();
+        public Dictionary<ArmorType, ArmorItem> armor { get; private set; } = emptyArmor();
 
         public void Equip(ArmorItem item) {
             inventory.Remove(item);
-            inventory.Add(armor[item.type]);
+            Unequip(item.type);
             armor[item.type] = item;
+        }
+
+        public void Unequip(ArmorType type) {
+            if (armor[type] != null) {
+                inventory.Add(armor[type]);
+                armor[type] = null;
+            }
+        }
+
+        public void AddItemToInventory(ArmorItem item) {
+            inventory.Add(item);
         }
 
         public Models.Common.Attributes GetAttributes() {
@@ -21,7 +32,7 @@ namespace Logic.Player.Commanders {
         }
 
         public List<Models.Action.ActionRoot> GetActions() {
-            return armor.Where(x => x.Value.action != null).Select(x => x.Value.action).ToList();
+            return armor.Where(x => x.Value?.action != null).Select(x => x.Value.action).ToList();
         }
         
         private static Dictionary<ArmorType, ArmorItem> emptyArmor() { 

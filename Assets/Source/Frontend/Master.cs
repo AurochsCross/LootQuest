@@ -5,17 +5,14 @@ using UnityEngine;
 namespace Frontend {
     public class Master : MonoBehaviour
     {
-        public Logic.Game.Master gameMaster = new Logic.Game.Master();
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
+        public static Master main;
+        public Logic.Game.Master gameMaster { get; private set; }
+        public Logic.Player.Master playerMaster { get; private set; } 
 
-        // Update is called once per frame
-        void Update()
-        {
-            
+        void Awake() {
+            main = this;
+            gameMaster = new Logic.Game.Master();
+            playerMaster = gameMaster.playerMaster;
         }
     }
 }

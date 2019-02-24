@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f45b538c7791a7a439b401b30d29b9d5, type: 3}
-  m_Name: Data
+  m_Name: Normal Pants
   m_EditorClassIdentifier: 
-  itemName: 
-  actionData: {fileID: 0}
-  type: 0
+  itemName: Normal Pants
+  actionGraph: {fileID: 0}
+  type: 3

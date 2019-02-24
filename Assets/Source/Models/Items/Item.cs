@@ -6,12 +6,21 @@ namespace Models.Items {
          
         public String itemName;
         public Models.Common.Attributes attributes = new Models.Common.Attributes();
-        public Models.Action.ActionRoot action;
+
+        public Tools.ActionBuilder.AbilityGraph actionGraph;
+        public Models.Action.ActionRoot action {
+            get {
+                if (actionCache == null) {
+                    actionCache = actionGraph == null ? null : actionGraph.GetAction();
+                }
+                return actionCache;
+            }
+        }
 
         private Models.Action.ActionRoot actionCache;
 
         public Item(string name) {
-            this.name = name;
+            this.itemName = name;
         }
     }
 }
