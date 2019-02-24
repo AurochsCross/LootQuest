@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace Logic.Pawns {
     class BattlePawn {
         public Common.Attributes baseAttributes { get; private set; }
-        public List<Actions.Action> actions { get; private set; }
+        public List<Models.Action.ActionRoot> actions { get; private set; }
 
         public int maxHitPoints { get; private set; }
         public int currentHitPoints { get; private set; }
 
-        public BattlePawn(Common.Attributes baseAttributes, List<Actions.Action> actions) {
+        public BattlePawn(Common.Attributes baseAttributes, List<Models.Action.ActionRoot> actions) {
             this.baseAttributes = baseAttributes;
             this.actions = actions;
             this.maxHitPoints = baseAttributes.strength;

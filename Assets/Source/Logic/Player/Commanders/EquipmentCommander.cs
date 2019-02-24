@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Logic.Items;
+using Models.Items;
 
 namespace Logic.Player.Commanders {
     class EquipmentCommander {
@@ -25,8 +25,8 @@ namespace Logic.Player.Commanders {
             return result;
         }
 
-        public List<Actions.Action> GetActions() {
-            List<Actions.Action> result = new List<Actions.Action>();
+        public List<Models.Action.ActionRoot> GetActions() {
+            List<Models.Action.ActionRoot> result = new List<Models.Action.ActionRoot>();
 
             foreach (var armorPiece in armor) {
                 if (armorPiece.Value.action != null) {
@@ -40,9 +40,9 @@ namespace Logic.Player.Commanders {
         private static Dictionary<ArmorType, ArmorItem> emptyArmor() {
             Dictionary<ArmorType, ArmorItem> armor = new Dictionary<ArmorType, ArmorItem>();
             
-            armor.Add(Items.ArmorType.body, null);
-            armor.Add(Items.ArmorType.helmet, null);
-            armor.Add(Items.ArmorType.legs, null);
+            armor.Add(Models.Items.ArmorType.body, null);
+            armor.Add(Models.Items.ArmorType.helmet, null);
+            armor.Add(Models.Items.ArmorType.legs, null);
 
             return armor;
         }

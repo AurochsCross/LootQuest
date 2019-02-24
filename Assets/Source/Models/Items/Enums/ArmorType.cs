@@ -1,4 +1,4 @@
-namespace Logic.Items {
+namespace Models.Items {
     public enum ArmorType {
         none,
         helmet,

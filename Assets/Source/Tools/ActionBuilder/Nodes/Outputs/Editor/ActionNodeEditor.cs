@@ -28,10 +28,10 @@ namespace Tools.ActionBuilder.Nodes {
                 // Effect 
                 
                 if (GUILayout.Button("Ganerate Json")) {
-                    Debug.Log("Test");
-                    var jsonExporter = new AbilityJsonExporter();
-                    var result = jsonExporter.GenerateActionJson(node);
+                    var result = AbilityJsonExporter.GenerateActionJson(node);
                     Debug.Log(result);
+                    var model = AbilityJsonExporter.GenerateActionFromJson(result);
+                    Debug.Log(model.name);
                 }
 
                 GUILayout.BeginHorizontal();

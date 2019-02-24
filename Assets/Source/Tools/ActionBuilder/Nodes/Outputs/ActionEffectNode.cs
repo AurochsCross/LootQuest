@@ -4,6 +4,7 @@ using UnityEngine;
 using XNode;
 using System;
 using System.Linq;
+using Models.Action;
 
 namespace Tools.ActionBuilder.Nodes {
     [NodeTint("#88FF88")]

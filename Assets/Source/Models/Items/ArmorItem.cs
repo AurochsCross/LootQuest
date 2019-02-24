@@ -1,4 +1,4 @@
-namespace Logic.Items {
+namespace Models.Items {
     class ArmorItem : Item
     {
         public ArmorType type { get; private set; }

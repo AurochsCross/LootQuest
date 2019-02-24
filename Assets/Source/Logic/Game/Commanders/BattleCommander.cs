@@ -10,7 +10,7 @@ namespace Logic.Game.Commanders {
             return new List<Pawns.BattlePawn>(pawns.SkipWhile(x => x == pawn));
         }
 
-        public void ExecuteAction(Actions.Action action, IActionAffectable source, IActionAffectable target) {
+        public void ExecuteAction(Models.Action.ActionRoot action, IActionAffectable source, IActionAffectable target) {
             
         }
     }
