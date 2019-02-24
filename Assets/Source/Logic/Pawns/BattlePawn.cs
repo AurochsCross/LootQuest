@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Logic.Pawns {
-    class BattlePawn {
-        public Common.Attributes baseAttributes { get; private set; }
+    public class BattlePawn {
+        public Models.Common.Attributes baseAttributes { get; private set; }
         public List<Models.Action.ActionRoot> actions { get; private set; }
 
         public int maxHitPoints { get; private set; }
         public int currentHitPoints { get; private set; }
 
-        public BattlePawn(Common.Attributes baseAttributes, List<Models.Action.ActionRoot> actions) {
+        public BattlePawn(Models.Common.Attributes baseAttributes, List<Models.Action.ActionRoot> actions) {
             this.baseAttributes = baseAttributes;
             this.actions = actions;
             this.maxHitPoints = baseAttributes.strength;

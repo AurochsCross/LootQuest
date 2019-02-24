@@ -1,12 +1,14 @@
 using System;
+using UnityEngine;
 
 namespace Models.Items {
-    class Item {
+    public class Item: ScriptableObject {
          
-        public String name { get; private set; }
-        public Logic.Common.Attributes attributes { get; private set; }
+        public String itemName;
+        public Models.Common.Attributes attributes = new Models.Common.Attributes();
+        public Models.Action.ActionRoot action;
 
-        public Models.Action.ActionRoot action { get; private set; }
+        private Models.Action.ActionRoot actionCache;
 
         public Item(string name) {
             this.name = name;

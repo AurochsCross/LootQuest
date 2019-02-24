@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Models.Items;
+using System.Linq;
 
 namespace Logic.Player.Commanders {
-    class EquipmentCommander {
+    public class EquipmentCommander {
         public List<Item> inventory { get; private set; } = new List<Item>();
         Dictionary<ArmorType, ArmorItem> armor = emptyArmor();
 
@@ -13,38 +14,23 @@ namespace Logic.Player.Commanders {
             armor[item.type] = item;
         }
 
-        public Common.Attributes GetAttributes() {
-            Common.Attributes result = new Common.Attributes(0, 0, 0);
-
-            foreach (var armorPiece in armor) {
-                if (armorPiece.Value.attributes != null) {
-                    result += armorPiece.Value.attributes;
-                }
-            }
-
+        public Models.Common.Attributes GetAttributes() {
+            Models.Common.Attributes result = new Models.Common.Attributes();
+            armor.Where(x => x.Value.attributes != null).ToList().ForEach(x => result += x.Value.attributes);
             return result;
         }
 
         public List<Models.Action.ActionRoot> GetActions() {
-            List<Models.Action.ActionRoot> result = new List<Models.Action.ActionRoot>();
-
-            foreach (var armorPiece in armor) {
-                if (armorPiece.Value.action != null) {
-                    result.Add(armorPiece.Value.action);
-                }
-            }
-
-            return result;
+            return armor.Where(x => x.Value.action != null).Select(x => x.Value.action).ToList();
         }
         
-        private static Dictionary<ArmorType, ArmorItem> emptyArmor() {
-            Dictionary<ArmorType, ArmorItem> armor = new Dictionary<ArmorType, ArmorItem>();
-            
-            armor.Add(Models.Items.ArmorType.body, null);
-            armor.Add(Models.Items.ArmorType.helmet, null);
-            armor.Add(Models.Items.ArmorType.legs, null);
-
-            return armor;
+        private static Dictionary<ArmorType, ArmorItem> emptyArmor() { 
+            return new Dictionary<ArmorType, ArmorItem> 
+            {  
+                {Models.Items.ArmorType.body, null},
+                {Models.Items.ArmorType.helmet, null},
+                {Models.Items.ArmorType.legs, null}
+            };
         }
     }
 }
