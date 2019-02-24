@@ -1,0 +1,61 @@
+using XNodeEditor;
+using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using XNode;
+using System.Linq;
+
+namespace Tools.ActionBuilder.Nodes {
+    [CustomNodeEditor(typeof(ActionNode))]
+    public class ActionNodeEditor : NodeEditor {
+        public override void OnBodyGUI() {
+
+                ActionNode node = target as ActionNode;
+                
+                // Action description
+
+                GUILayout.Label("Description");
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Name: ", GUILayout.ExpandWidth(false));
+                node.actionName = GUILayout.TextField(node.actionName);
+                GUILayout.EndHorizontal();
+
+                GUILayout.Label("Description: ");
+                node.actionDescription = GUILayout.TextArea(node.actionDescription, GUILayout.Height(60));
+
+                // Effect 
+                
+                if (GUILayout.Button("Ganerate Json")) {
+                    Debug.Log("Test");
+                    var jsonExporter = new AbilityJsonExporter();
+                    var result = jsonExporter.GenerateActionJson(node);
+                    Debug.Log(result);
+                }
+
+                GUILayout.BeginHorizontal();
+
+                
+
+                GUILayout.Label("Effects:");
+                GUILayout.Label("");
+
+                if (GUILayout.Button("-")) {
+                    if (node.Ports.Count() > 1)
+                    node.RemoveInstancePort(node.Ports.Last());
+                }
+
+                if (GUILayout.Button("+")) {
+                    node.AddNewPort();
+                }
+
+                GUILayout.EndHorizontal();
+
+                foreach (var port in node.Ports) {
+                    NodeEditorGUILayout.PortField(port);
+                }
+
+            }
+    }
+}
