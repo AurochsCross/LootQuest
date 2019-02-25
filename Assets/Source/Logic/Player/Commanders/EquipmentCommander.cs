@@ -27,7 +27,7 @@ namespace Logic.Player.Commanders {
 
         public Models.Common.Attributes GetAttributes() {
             Models.Common.Attributes result = new Models.Common.Attributes();
-            armor.Where(x => x.Value.attributes != null).ToList().ForEach(x => result += x.Value.attributes);
+            armor.Where(x => x.Value?.attributes != null).ToList().ForEach(x => result += x.Value.attributes);
             return result;
         }
 

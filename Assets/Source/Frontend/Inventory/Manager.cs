@@ -15,6 +15,10 @@ namespace Frontend.Inventory {
         public Button torsoButton;
         public Button leggingButton;
 
+        public Text strengthText;
+        public Text intelligenceText;
+        public Text dexterityText;
+
         public GameObject inventoryUI;
 
         void Awake() {
@@ -60,6 +64,16 @@ namespace Frontend.Inventory {
             helmetButton.transform.GetChild(0).GetComponent<Text>().text = equipmentCommander.armor[Models.Items.ArmorType.helmet]?.name ?? "None";
             torsoButton.transform.GetChild(0).GetComponent<Text>().text = equipmentCommander.armor[Models.Items.ArmorType.body]?.name ?? "None";
             leggingButton.transform.GetChild(0).GetComponent<Text>().text = equipmentCommander.armor[Models.Items.ArmorType.legs]?.name ?? "None";
+
+            UpdateCharacteristics();
+        }
+
+        private void UpdateCharacteristics() {
+            var attributes = equipmentCommander.GetAttributes();
+
+            strengthText.text = attributes.strength.ToString();
+            intelligenceText.text = attributes.intelligence.ToString();
+            dexterityText.text = attributes.dexterity.ToString();
         }
 
         private void AddItemToPanel(Models.Items.Item item) {
