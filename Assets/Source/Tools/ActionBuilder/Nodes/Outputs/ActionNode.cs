@@ -15,11 +15,20 @@ namespace Tools.ActionBuilder.Nodes {
         public string actionName;
         public string actionDescription; 
 
+        [Output] public ActionNode This;
+
         protected override void Init() {
             base.Init();
             if (this.GetInputPort("0") == null) {
                 this.AddInstanceInput(typeof(ActionEffect), ConnectionType.Override, TypeConstraint.Inherited, "0");
             }
+        }
+
+        public override object GetValue(NodePort port) {
+            if (port.fieldName == "This") 
+                return this;
+            else 
+                return null;
         }
 
         public void AddNewPort() {
