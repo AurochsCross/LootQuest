@@ -6,20 +6,14 @@ using System.Linq;
 
 namespace Tools.Aura.Nodes.CompletionConditions {
 
-    public enum CompletionConditionType {
-        Time,
-        ActionsUsed,
-        DamageTaken,
-        DamageActionsTaken,
-        DamageInflicted
-    }
+    
 
     [NodeWidth(250)]
     public class CompletionCondition : Node, Interfaces.ICompletionCondition {
 
-        public CompletionConditionType Type;
+        public LootQuest.Models.Action.Aura.CompletionConditionType Type;
         [HideInInspector]
-        public CasterType Caster;
+        public LootQuest.Models.Action.Aura.CasterType Caster;
         [Input] public string Value;
         [Output] public CompletionCondition Condition;
 
@@ -28,6 +22,10 @@ namespace Tools.Aura.Nodes.CompletionConditions {
                 return this;
             else 
                 return null;
+        }
+
+        public string GetValue() {
+            return GetInputValue<string>("Value", Value);
         }
 
     }

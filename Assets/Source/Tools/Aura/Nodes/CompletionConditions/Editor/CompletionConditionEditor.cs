@@ -12,7 +12,7 @@ namespace Tools.Aura.Nodes.CompletionConditions {
         public override void OnBodyGUI() {
             CompletionCondition node = target as CompletionCondition;
 
-            node.Caster = (CasterType)GUILayout.SelectionGrid((int)node.Caster, new string[]{"Self", "Other", "Any"}, 3);
+            node.Caster = (LootQuest.Models.Action.Aura.CasterType)GUILayout.SelectionGrid((int)node.Caster, new string[]{"Self", "Other", "Any"}, 3);
             
             base.OnBodyGUI();
         }
