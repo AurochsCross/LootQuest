@@ -11,6 +11,9 @@ namespace Tools.Aura.Nodes {
         [Input] public CompletionConditions.CompletionCondition DestroyConditions;
         [Output] public AuraMasterNode Triggers;
 
-        
+        [ContextMenu("Set as main")]
+        void SetMain() {
+            (graph as AuraGraph).MasterNode = this;
+        }
     }
 }

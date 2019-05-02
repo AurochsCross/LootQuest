@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Completion Condition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1656, y: -680}
+  position: {x: -1656, y: -712}
   ports:
     keys:
     - Condition
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -824}
+  position: {x: -1080, y: -824}
   ports:
     keys:
     - Master
@@ -95,10 +95,7 @@ MonoBehaviour:
       _node: {fileID: -7054897381029389641}
       _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: valueCalculation
-        node: {fileID: -781407777922600114}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -120,7 +117,7 @@ MonoBehaviour:
   m_Name: Action Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -504, y: -1144}
+  position: {x: -520, y: -1160}
   ports:
     keys:
     - 0
@@ -154,6 +151,38 @@ MonoBehaviour:
   actionName: 
   actionDescription: 
   This: {fileID: 0}
+--- !u!114 &-4588699223283423757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285c4d7c4c0108e45a113bc2cb2cefd4, type: 3}
+  m_Name: Aura Refference
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1032, y: -1000}
+  ports:
+    keys:
+    - Aura
+    values:
+    - _fieldName: Aura
+      _node: {fileID: -4588699223283423757}
+      _typeQualifiedName: Tools.Aura.Nodes.AuraMasterNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Aura
+        node: {fileID: -781407777922600114}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Graph: {fileID: 11400000}
+  Aura: {fileID: 0}
 --- !u!114 &-4552614744593701061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +256,7 @@ MonoBehaviour:
   m_Name: Action Effect Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -744, y: -1224}
+  position: {x: -776, y: -1096}
   ports:
     keys:
     - hitCondition
@@ -238,6 +267,7 @@ MonoBehaviour:
     - valueCalculationRaw
     - calculatedValue
     - output
+    - Aura
     values:
     - _fieldName: hitCondition
       _node: {fileID: -781407777922600114}
@@ -261,10 +291,7 @@ MonoBehaviour:
       _node: {fileID: -781407777922600114}
       _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: Value
-        node: {fileID: -7054897381029389641}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -319,6 +346,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: Aura
+      _node: {fileID: -781407777922600114}
+      _typeQualifiedName: Tools.Aura.Nodes.AuraMasterNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Aura
+        node: {fileID: -4588699223283423757}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   id: 0
   hitCondition: 
   didHit: 
@@ -326,11 +365,12 @@ MonoBehaviour:
   Delay: 0
   WindupEffects: []
   Effects: []
+  Aura: {fileID: 0}
   valueCalculationRaw: 
   calculatedValue: 
-  type: 1
+  type: 2
   subject: 0
-  typeIndex: 1
+  typeIndex: 2
   output:
     id: 0
     type: 0
@@ -361,6 +401,8 @@ MonoBehaviour:
   - {fileID: -5246066885883261208}
   - {fileID: -781407777922600114}
   - {fileID: 5004656682645389148}
+  - {fileID: -4588699223283423757}
+  MasterNode: {fileID: -4552614744593701061}
 --- !u!114 &316759890457747514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +416,7 @@ MonoBehaviour:
   m_Name: Completion Condition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1656, y: -904}
+  position: {x: -1656, y: -888}
   ports:
     keys:
     - Condition
@@ -418,7 +460,7 @@ MonoBehaviour:
   m_Name: Characteristic Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1880, y: -680}
+  position: {x: -1912, y: -712}
   ports:
     keys:
     - result

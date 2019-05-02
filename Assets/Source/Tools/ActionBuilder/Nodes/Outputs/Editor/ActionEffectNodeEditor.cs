@@ -15,7 +15,7 @@ namespace Tools.ActionBuilder.Nodes {
 
             node.subject = (EffectSubject)GUILayout.SelectionGrid((int)node.subject, new string[]{"Source", "Target" }, 2);
 
-            node.typeIndex = GUILayout.SelectionGrid(node.typeIndex, new string[]{"Attack", "Heal" }, 2);
+            node.typeIndex = GUILayout.SelectionGrid(node.typeIndex, new string[]{"Attack", "Heal", "Aura" }, 3);
             switch (node.typeIndex) {
                 case 0: {
                     node.type = EffectType.Damage;
@@ -23,6 +23,10 @@ namespace Tools.ActionBuilder.Nodes {
                 }
                 case 1: {
                     node.type = EffectType.Heal;
+                    break;
+                }
+                case 2: {
+                    node.type = EffectType.Aura;
                     break;
                 }
             }
@@ -42,20 +46,28 @@ namespace Tools.ActionBuilder.Nodes {
             DrawEffectArray(node);
             DrawWindupEffectArray(node);
 
-            GUILayout.Label("Hit condition");
-            NodeEditorGUILayout.PortField(new GUIContent("Input"), node.GetPort("hitCondition"));
-            NodeEditorGUILayout.PortField(node.GetPort("didHit"));
+            if (node.type == EffectType.Aura) {
+                foreach (var connection in node.GetPort("hitCondition").GetConnections()) {
+                    node.GetPort("hitCondition").Disconnect(connection);
+                }
+                foreach (var connection in node.GetPort("valueCalculation").GetConnections()) {
+                    node.GetPort("valueCalculation").Disconnect(connection);
+                }
 
-            GUILayout.Label("Value calculation");
-            NodeEditorGUILayout.PortField(new GUIContent("Input"), node.GetPort("valueCalculation"));
-            NodeEditorGUILayout.PortField(new GUIContent("Calculation"), node.GetPort("valueCalculationRaw"));
-            NodeEditorGUILayout.PortField(new GUIContent("Calculated value"), node.GetPort("calculatedValue"));
-            
-            GUILayout.Label("");
+                NodeEditorGUILayout.PortField(node.GetPort("Aura"));
+            } else {
+                GUILayout.Label("Hit condition");
+                NodeEditorGUILayout.PortField(new GUIContent("Input"), node.GetPort("hitCondition"));
+                NodeEditorGUILayout.PortField(node.GetPort("didHit"));
+
+                GUILayout.Label("Value calculation");
+                NodeEditorGUILayout.PortField(new GUIContent("Input"), node.GetPort("valueCalculation"));
+                NodeEditorGUILayout.PortField(new GUIContent("Calculation"), node.GetPort("valueCalculationRaw"));
+                NodeEditorGUILayout.PortField(new GUIContent("Calculated value"), node.GetPort("calculatedValue"));
+                
+                GUILayout.Label("");
+            }
             NodeEditorGUILayout.PortField(node.GetPort("output"));
-            //GUILayout.EndHorizontal();
-
-            // SimpleGraph graph = node.graph;
         }
 
         private bool _showEffects = false;

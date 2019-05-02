@@ -18,6 +18,7 @@ namespace Tools.ActionBuilder.Nodes {
         public float Delay = 0f;
         [Input] public List<GameObject> WindupEffects;
         [Input] public List<GameObject> Effects;
+        [Input] public Aura.Nodes.AuraMasterNode Aura;
         [Output] public string valueCalculationRaw;
         [Output] public string calculatedValue;
         public EffectType type = EffectType.Damage;

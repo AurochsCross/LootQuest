@@ -7,6 +7,6 @@ using System.Linq;
 namespace Tools.Aura {
     [CreateAssetMenu(menuName = "Tools/Abiities/Aura Graph")]
     public class AuraGraph : NodeGraph {
-        
+        public Nodes.AuraMasterNode MasterNode = null;
     }
 }
