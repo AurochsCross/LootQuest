@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 
-namespace Tools.ActionBuilder.Nodes {
-    public enum OwnerType {
+public enum OwnerType {
         Source,
         Target
     };
@@ -17,9 +16,12 @@ namespace Tools.ActionBuilder.Nodes {
         Hp
     };
 
+namespace Tools.ActionBuilder.Nodes {
+    
+
     [NodeTint("#AAFFFF")]
     [CreateNodeMenu("Data/Characteristic")]
-    public class Characteristic : Node { 
+    public class CharacteristicNode : Node { 
         public OwnerType owner;
         public CharacteristicType characteristic;
         [Output] public string result;

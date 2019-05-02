@@ -5,14 +5,26 @@ using UnityEngine;
 namespace Frontend {
     public class Master : MonoBehaviour
     {
-        public static Master main;
-        public Logic.Game.Master gameMaster { get; private set; }
-        public Logic.Player.Master playerMaster { get; private set; } 
+        public static Master Shared;
+        public LootQuest.Logic.Game.Master GameMaster { get; private set; }
+        public Entity.EntityMaster PlayerMaster;
+        public Exploring.EntityRegistry EntityRegistry; 
+        public Battle.BattleManager BattleManager;
 
         void Awake() {
-            main = this;
-            gameMaster = new Logic.Game.Master();
-            playerMaster = gameMaster.playerMaster;
+            Shared = this;
+            GameMaster = new LootQuest.Logic.Game.Master();
+            EntityRegistry = gameObject.GetComponent<Exploring.EntityRegistry>();
+        }
+
+        void Start() {
+            GameMaster.SetPlayer(PlayerMaster.Master);
+        }
+
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                Application.LoadLevel(0);
+            }
         }
     }
 }

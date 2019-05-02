@@ -9,14 +9,14 @@ namespace Tools.ActionBuilder.Nodes {
 
     [CreateNodeMenu("Operations/Condition")]
     public class ConditionNode : Node { 
-        [Input] public string first;
-        [Input] public string second;
+        [Input(backingValue = ShowBackingValue.Always, connectionType = ConnectionType.Override)] public string a;
+        [Input(connectionType = ConnectionType.Override)] public string b;
         public ConditionType condition;
         [Output] public string result;
 
         public override object GetValue(NodePort port) {
-            string firstValue = string.IsNullOrWhiteSpace(GetInputValue<string>("first")) ? first : GetInputValue<string>("first");
-            string secondValue = string.IsNullOrWhiteSpace(GetInputValue<string>("second")) ? second : GetInputValue<string>("second");
+            string firstValue = string.IsNullOrWhiteSpace(GetInputValue<string>("a")) ? a : GetInputValue<string>("a");
+            string secondValue = string.IsNullOrWhiteSpace(GetInputValue<string>("b")) ? b : GetInputValue<string>("b");
 
             string equationSign = "";
             switch(condition) {

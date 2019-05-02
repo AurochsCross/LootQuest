@@ -4,7 +4,7 @@ using UnityEngine;
 using XNode;
 using System;
 using System.Linq;
-using Models.Action;
+using LootQuest.Models.Action;
 
 namespace Tools.ActionBuilder.Nodes {
     [NodeTint("#88FF88")]
@@ -14,9 +14,14 @@ namespace Tools.ActionBuilder.Nodes {
         [Input] public string hitCondition;
         [Output] public string didHit;
         [Input] public string valueCalculation;
+
+        public float Delay = 0f;
+        [Input] public List<GameObject> WindupEffects;
+        [Input] public List<GameObject> Effects;
         [Output] public string valueCalculationRaw;
         [Output] public string calculatedValue;
-        public ActionType type = ActionType.Damage;
+        public EffectType type = EffectType.Damage;
+        public EffectSubject subject = EffectSubject.Source;
         public int typeIndex = 0; // 0 - Damage, 1 - Heal
 
         [Output] public ActionEffect output;
@@ -39,7 +44,7 @@ namespace Tools.ActionBuilder.Nodes {
             string valueCalculationValue = string.IsNullOrWhiteSpace(GetInputValue<string>("valueCalculation")) ? valueCalculation : GetInputValue<string>("valueCalculation");
             
             if (port.fieldName == "output")
-                return new ActionEffect(id, hitConditionValue, valueCalculationValue, type);
+                return new ActionEffect(id, hitConditionValue, valueCalculationValue, type, subject, Delay);
             else if (port.fieldName == "calculatedValue") 
                 return String.Format("[{0}:calculatedValue]", id);
             else if (port.fieldName == "didHit") 
@@ -51,10 +56,11 @@ namespace Tools.ActionBuilder.Nodes {
         }
 
         public ActionEffect GetActionEffect() {
+            var typeValue = GetInputValue<EffectType>("type");
             string hitConditionValue = string.IsNullOrWhiteSpace(GetInputValue<string>("hitCondition")) ? hitCondition : GetInputValue<string>("hitCondition");
             string valueCalculationValue = string.IsNullOrWhiteSpace(GetInputValue<string>("valueCalculation")) ? valueCalculation : GetInputValue<string>("valueCalculation");
             
-            return new ActionEffect(id, hitConditionValue, valueCalculationValue, type);
+            return new ActionEffect(id, hitConditionValue, valueCalculationValue, type, subject, Delay);
         }
 
     }

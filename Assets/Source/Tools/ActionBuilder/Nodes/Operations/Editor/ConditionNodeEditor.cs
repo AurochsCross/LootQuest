@@ -12,9 +12,9 @@ namespace Tools.ActionBuilder.Nodes {
         public override void OnBodyGUI() {
             ConditionNode node = target as ConditionNode;
 
-            NodeEditorGUILayout.PortField(node.GetPort("first"));
+            NodeEditorGUILayout.PortField(node.GetPort("a"));
             node.condition = (ConditionType)GUILayout.SelectionGrid((int)node.condition, new string[]{">", "<", "="}, 3);
-            NodeEditorGUILayout.PortField(node.GetPort("second"));
+            NodeEditorGUILayout.PortField(node.GetPort("b"));
             NodeEditorGUILayout.PortField(node.GetPort("result"));
         }
     }

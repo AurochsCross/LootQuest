@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 using System.Linq;
+using UnityEditor;
 
 namespace Tools.ActionBuilder.Nodes {
     [CustomNodeEditor(typeof(ActionNode))]
@@ -16,6 +17,11 @@ namespace Tools.ActionBuilder.Nodes {
                 // Action description
 
                 GUILayout.Label("Description");
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Icon: ", GUILayout.ExpandWidth(false));
+                node.ActionIcon = EditorGUILayout.ObjectField(node.ActionIcon, typeof(Sprite)) as Sprite;
+                GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Name: ", GUILayout.ExpandWidth(false));

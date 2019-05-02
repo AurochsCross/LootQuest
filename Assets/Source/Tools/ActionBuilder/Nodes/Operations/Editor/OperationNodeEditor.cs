@@ -13,11 +13,15 @@ namespace Tools.ActionBuilder.Nodes {
                 OperationNode node = target as OperationNode;
                 // SimpleGraph graph = node.graph;
 
+                NodeEditorGUILayout.PortField(node.GetInputPort("a"));
                 node.operationType = (OperationType)GUILayout.SelectionGrid((int)node.operationType, new string[]{"+", "-", "*", "/" }, 4);
+                NodeEditorGUILayout.PortField(node.GetInputPort("b"));
+                NodeEditorGUILayout.PortField(node.GetOutputPort("result"));
 
-                foreach (var port in node.Ports) {
-                    NodeEditorGUILayout.PortField(port);
-                }
+
+                // foreach (var port in node.Ports) {
+                //     NodeEditorGUILayout.PortField(port);
+                // }
             }
     }
 }

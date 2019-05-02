@@ -9,15 +9,22 @@ namespace Tools.ActionBuilder.Nodes {
 
     [CreateNodeMenu("Operations/Math Operation")]
     public class OperationNode : Node { 
-        [Input] public string first;
-        [Input] public string second;
+        [Input] public string a;
+        [Input] public string b;
         public OperationType operationType = OperationType.Add;
         [Output] public string result;
 
 
         public override object GetValue(NodePort port) {
-            string aValue = GetInputValue<string>("first");
-            string bValue = GetInputValue<string>("second");
+            string aValue = GetInputValue<string>("a");
+            string bValue = GetInputValue<string>("b");
+
+            foreach (var inputPort in Ports) {
+                Debug.Log(inputPort.fieldName + " connections: " + inputPort.ConnectionCount);
+                foreach (var connection in inputPort.GetConnections()) {
+                    Debug.Log("Connection: " + connection.fieldName);
+                }
+            }
 
             if (port.fieldName == "result") {
                 switch (operationType) {

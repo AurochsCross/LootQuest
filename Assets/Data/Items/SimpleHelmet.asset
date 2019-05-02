@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45b538c7791a7a439b401b30d29b9d5, type: 3}
   m_Name: SimpleHelmet
   m_EditorClassIdentifier: 
-  itemName: Simple Helmet
+  Id: 2
   type: 1
+  itemName: Simple Helmet
+  actionGraph: {fileID: 11400000, guid: f515cb686ae9f364ba112ae3c4eefb0b, type: 2}
+  Strength: 1
+  Intelligence: 1
+  Dexterity: 1

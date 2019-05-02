@@ -4,13 +4,14 @@ using UnityEngine;
 using XNode;
 using System;
 using System.Linq;
-using Models.Action;
+using LootQuest.Models.Action;
 
 namespace Tools.ActionBuilder.Nodes {
     [NodeTint("#88FF88")]
     [CreateNodeMenu("Outputs/Action Output")]
     public class ActionNode : Node { 
-
+        
+        public Sprite ActionIcon;
         public string actionName;
         public string actionDescription; 
 
@@ -27,6 +28,16 @@ namespace Tools.ActionBuilder.Nodes {
 
         public ActionEffectNode[] GetEffectNodes() {
             return Inputs.Select(x => (ActionEffectNode)x.Connection.node).ToArray();
+        }
+
+        public ActionRoot GetAction() {
+            ActionRoot action = new ActionRoot();
+            action.name = actionName;
+            action.description = actionDescription;
+            action.id = this.graph.GetInstanceID();
+            action.effects = GetEffectNodes().Select( x => x.GetActionEffect() ).ToArray();
+            action.AddRepresentable(this);
+            return action;
         }
     }
 }

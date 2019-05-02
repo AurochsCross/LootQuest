@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using Models.Items;
-using Models.Common;
+using LootQuest.Models.Common;
 
 namespace Tools.Items
 {
@@ -15,7 +15,7 @@ namespace Tools.Items
 
         public override void OnInspectorGUI()
         {
-            EditorUtility.SetDirty(this);
+            EditorUtility.SetDirty(target);
             var armor = target as ArmorItem;
 
             DrawInformation(armor);
@@ -24,12 +24,16 @@ namespace Tools.Items
             DrawCharacteristics(armor);
             EditorGUILayout.Separator();
 
-            EditorGUILayout.LabelField("Action: " + (armor.action != null ? armor.action.name : "none"), GUILayout.ExpandWidth(false));
             armor.actionGraph = (Tools.ActionBuilder.AbilityGraph)EditorGUILayout.ObjectField(armor.actionGraph, typeof(Tools.ActionBuilder.AbilityGraph), false);
         }
 
         private static void DrawInformation(ArmorItem armor)
         {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Id: ", GUILayout.ExpandWidth(false));
+            armor.Id = EditorGUILayout.IntField(armor.Id);
+            EditorGUILayout.EndHorizontal();
+            
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Name: ", GUILayout.ExpandWidth(false));
             armor.itemName = EditorGUILayout.TextField(armor.itemName);
@@ -37,34 +41,27 @@ namespace Tools.Items
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Type: ", GUILayout.ExpandWidth(false));
-            armor.type = (ArmorType)EditorGUILayout.EnumPopup(armor.type);
+            armor.type = (LootQuest.Models.Items.ArmorType)EditorGUILayout.EnumPopup(armor.type);
             EditorGUILayout.EndHorizontal();
         }
 
         private void DrawCharacteristics(ArmorItem armor)
         {
-            if (armor.attributes == null)
-            {
-                armor.attributes = new Attributes();
-            }
-
             EditorGUILayout.LabelField("Characteristics");
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Strength: ");
-            var strength = EditorGUILayout.IntField(armor.attributes.strength);
+            armor.Strength = EditorGUILayout.IntField(armor.Strength);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Dexterity: ");
-            var dexterity = EditorGUILayout.IntField(armor.attributes.dexterity);
+            armor.Dexterity = EditorGUILayout.IntField(armor.Dexterity);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Intelligence: ");
-            var intelligence = EditorGUILayout.IntField(armor.attributes.intelligence);
+            armor.Intelligence = EditorGUILayout.IntField(armor.Intelligence);
             EditorGUILayout.EndHorizontal();
-
-            armor.attributes = new Attributes(strength, dexterity, intelligence);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.IO;
-using Models.Action;
+using LootQuest.Models.Action;
 
 namespace Tools.ActionBuilder
 {

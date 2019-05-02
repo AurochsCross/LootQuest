@@ -7,25 +7,33 @@ namespace Frontend.DebugHelper
 {
     public class InventoryPopulator : MonoBehaviour
     {
+        public Inventory.ItemRegistry ItemRegistry;
         public Models.Items.ArmorItem[] armorItems;
+        public Models.Items.ArmorItem[] equipedItems;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            Logic.Player.Commanders.EquipmentCommander equipmentCommander = Frontend.Master.main.playerMaster.equipmentCommander;
-            armorItems.ToList().ForEach(x => equipmentCommander.AddItemToInventory(x));
-            equipmentCommander.inventory.ForEach(x => Debug.Log(x.itemName));
-
-            //equipmentCommander.Equip((Models.Items.ArmorItem)equipmentCommander.inventory.First());
-
-            Debug.Log("Actions:");
-            equipmentCommander.GetActions().ForEach(x => Debug.Log(x.name));
+        void Start() {
+            Populate();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.C)) {
+                
+            }
+        }
 
+        private void Populate() {
+            var master = gameObject.GetComponent<Entity.EntityMaster>();
+            LootQuest.Logic.Entity.Commanders.EquipmentCommander equipmentCommander = gameObject.GetComponent<Entity.EntityMaster>().Master.EquipmentCommander;
+            armorItems.ToList().ForEach(x =>  { 
+                equipmentCommander.AddItemToInventory(x.GeneratedItem); 
+                ItemRegistry.AddItem(x);
+            });
+            
+            equipedItems.ToList().ForEach( x => {
+                equipmentCommander.AddItemToInventory(x.GeneratedItem); 
+                equipmentCommander.Equip(x.GeneratedItem);
+                ItemRegistry.AddItem(x);
+            });
         }
     }
 }

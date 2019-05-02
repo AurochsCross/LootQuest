@@ -15,7 +15,7 @@ namespace Frontend.DebugHelper
         }
 
         private void StartBattle() {
-            Logic.Pawns.BattlePawn pawn = new Logic.Pawns.BattlePawn(new Models.Common.Attributes(20, 20, 20), new List<Models.Action.ActionRoot>());
+            LootQuest.Logic.Pawns.BattlePawn pawn = new LootQuest.Logic.Pawns.BattlePawn(new LootQuest.Models.Common.Attributes(20, 20, 20), new List<LootQuest.Models.Action.ActionRoot>());
         }
     }
 }

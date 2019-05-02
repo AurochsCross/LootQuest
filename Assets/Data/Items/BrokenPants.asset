@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45b538c7791a7a439b401b30d29b9d5, type: 3}
   m_Name: BrokenPants
   m_EditorClassIdentifier: 
-  itemName: Broken Pants
-  actionGraph: {fileID: 0}
+  Id: 0
   type: 3
+  itemName: Broken Pants
+  actionGraph: {fileID: 11400000, guid: 13a8c958dec3998468ea930e6716486c, type: 2}
+  Strength: 1
+  Intelligence: 1
+  Dexterity: 1

@@ -7,10 +7,10 @@ using XNode;
 using System.Linq;
 
 namespace Tools.ActionBuilder.Nodes {
-    [CustomNodeEditor(typeof(Characteristic))]
+    [CustomNodeEditor(typeof(CharacteristicNode))]
     public class CharacteristicNodeEditor : NodeEditor {
         public override void OnBodyGUI() {
-            Characteristic node = target as Characteristic;
+            CharacteristicNode node = target as CharacteristicNode;
 
             node.owner = (OwnerType)GUILayout.SelectionGrid((int)node.owner, new string[]{"Source", "Target" }, 2);
             node.characteristic = (CharacteristicType)EditorGUILayout.EnumPopup(node.characteristic);
