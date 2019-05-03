@@ -25,7 +25,16 @@ namespace Tools.Aura {
                 return new LootQuest.Models.Action.Aura.Trigger(x.Type, x.GetActionRoot());
             }).ToList();
 
-            return new LootQuest.Models.Action.Aura.AuraRoot(completionConditions, destroyConditions, triggers);
+            var aura = new LootQuest.Models.Action.Aura.AuraRoot(completionConditions, destroyConditions, triggers);
+            if(MasterNode.OverridesDamage) {
+                aura.AddDamageOverride(MasterNode.GetInputValue<string>("DamageOverrideFormula", MasterNode.DamageOverrideFormula));
+            }
+
+            if(MasterNode.OverridesHealing) {
+                aura.AddHealingOverride(MasterNode.GetInputValue<string>("HealingOverrideFormula", MasterNode.HealingOverrideFormula));
+            }
+
+            return aura;
         }
 
 
@@ -45,12 +54,6 @@ namespace Tools.Aura {
             return MasterNode.GetInputPort(portName).GetConnections()
                 .Where(x => x.node is Nodes.CompletionConditions.CompletionCondition)
                 .Select(x => (Nodes.CompletionConditions.CompletionCondition)x.node ).ToList();
-        }
-
-        [ContextMenu("Test model convertion")]
-        void TestModelConvertion() {
-            var model = ConvertToModel();
-            Debug.Log(model);
         }
     }
 }

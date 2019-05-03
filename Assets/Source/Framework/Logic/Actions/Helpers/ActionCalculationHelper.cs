@@ -13,15 +13,17 @@ namespace LootQuest.Logic.Actions.Helpers {
             result = result.Replace("[s:dexterity]", source.BattlePawn.baseAttributes.dexterity.ToString());
             result = result.Replace("[s:hp]", source.BattlePawn.currentHitPoints.ToString());
             result = result.Replace("[s:maxHp]", source.BattlePawn.maxHitPoints.ToString());
-
+            
             result = result.Replace("[t:strength]", target.BattlePawn.baseAttributes.strength.ToString());
             result = result.Replace("[t:intelligence]", target.BattlePawn.baseAttributes.intelligence.ToString());
             result = result.Replace("[t:dexterity]", target.BattlePawn.baseAttributes.dexterity.ToString());
             result = result.Replace("[t:hp]", target.BattlePawn.currentHitPoints.ToString());
             result = result.Replace("[t:maxHp]", target.BattlePawn.maxHitPoints.ToString());
 
-            action.effects.ToList().ForEach( x => result = result.Replace(String.Format("[{0}:didHit]", x.id), x.didHit ? "1" : "0"));
-            action.effects.ToList().ForEach( x => result = result.Replace(String.Format("[{0}:calculatedValue]", x.id), x.calculatedValue.ToString()));
+            if (action != null) {
+                action.effects.ToList().ForEach( x => result = result.Replace(String.Format("[{0}:didHit]", x.id), x.didHit ? "1" : "0"));
+                action.effects.ToList().ForEach( x => result = result.Replace(String.Format("[{0}:calculatedValue]", x.id), x.calculatedValue.ToString()));
+            }
 
             return result;
         }

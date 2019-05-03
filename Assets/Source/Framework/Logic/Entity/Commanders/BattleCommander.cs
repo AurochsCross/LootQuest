@@ -11,9 +11,12 @@ namespace LootQuest.Logic.Entity.Commanders {
         public event BattleHandler OnDamageTaken;
         public event BattleHandler OnHealingTaken;
         public event BattleHandler OnDeath;
+        public event BattleHandler OnActionUsed;
 
         public delegate void EffectHandler(object myObject, Models.Events.EffectExecutionArgs args);
         public event EffectHandler OnEffectExecution;
+        
+        private List<Logic.Actions.AuraHandler> _activeAuras = new List<Logic.Actions.AuraHandler>();
 
         #endregion
         public string Name { 
@@ -32,14 +35,35 @@ namespace LootQuest.Logic.Entity.Commanders {
         }
 
         public void UseAction(LootQuest.Models.Action.ActionRoot action) {
-            var actions = Master.AvailableActions;
-            //if (actions.Contains(action)) {
-                _battleMaster.ExecuteAction(action, this);
-            //}
+            
+            if (OnActionUsed != null) {
+                OnActionUsed(this, new Models.Events.BattlePawnArgs(1));
+            }
+
+            _battleMaster.ExecuteAction(action, this);
+        }
+
+        public void AddAura(Models.Action.Aura.AuraRoot aura) {
+            var auraHandler = new Actions.AuraHandler(aura, this, _battleMaster.GetOtherCommander(this));
+            auraHandler.SetupAura();
+            _activeAuras.Add(auraHandler);
+        }
+
+        public void RemoveAura(Actions.AuraHandler auraHandler) {
+            _activeAuras.Remove(auraHandler);
+            auraHandler = null;
         }
 
         public void TakeDamage(int value) {
-            BattlePawn.TakeDamage(value);
+            int damageAmount = value;
+            foreach (var aura in _activeAuras.ToList()) {
+                damageAmount = aura.TakeDamage(damageAmount);
+            }
+
+            if (damageAmount <= 0)
+                return;
+
+            BattlePawn.TakeDamage(damageAmount);
 
             if (BattlePawn.currentHitPoints <= 0) {
                 OnDeath(this, null);
@@ -48,14 +72,22 @@ namespace LootQuest.Logic.Entity.Commanders {
             }
 
             if (OnDamageTaken != null) {
-                OnDamageTaken(this, new Models.Events.BattlePawnArgs(value));
+                OnDamageTaken(this, new Models.Events.BattlePawnArgs(damageAmount));
             }
         }
 
         public void TakeHealing(int value) {
-            BattlePawn.TakeHealing(value);
+            int healingAmount = value;
+            foreach (var aura in _activeAuras.ToList()) {
+                healingAmount = aura.TakeHealing(healingAmount);
+            }
+
+            if (healingAmount <= 0)
+                return;
+
+            BattlePawn.TakeHealing(healingAmount);
             if (OnHealingTaken != null) {
-                OnHealingTaken(this, new Models.Events.BattlePawnArgs(value));
+                OnHealingTaken(this, new Models.Events.BattlePawnArgs(healingAmount));
             }
         }
 

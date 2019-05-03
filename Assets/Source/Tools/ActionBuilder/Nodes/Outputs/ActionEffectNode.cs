@@ -59,9 +59,12 @@ namespace Tools.ActionBuilder.Nodes {
         public ActionEffect GetActionEffect() {
             var typeValue = GetInputValue<EffectType>("type");
             string hitConditionValue = string.IsNullOrWhiteSpace(GetInputValue<string>("hitCondition")) ? hitCondition : GetInputValue<string>("hitCondition");
-            string valueCalculationValue = string.IsNullOrWhiteSpace(GetInputValue<string>("valueCalculation")) ? valueCalculation : GetInputValue<string>("valueCalculation");
-            
-            return new ActionEffect(id, hitConditionValue, valueCalculationValue, type, subject, Delay);
+            if(type != EffectType.Aura) {
+                string valueCalculationValue = string.IsNullOrWhiteSpace(GetInputValue<string>("valueCalculation")) ? valueCalculation : GetInputValue<string>("valueCalculation");
+                return new ActionEffect(id, hitConditionValue, valueCalculationValue, type, subject, Delay);
+            } else {
+                return new ActionEffect(id, hitConditionValue, (GetInputValue<Aura.Nodes.AuraMasterNode>("Aura", Aura).graph as Tools.Aura.AuraGraph).ConvertToModel(), subject, Delay);
+            }
         }
 
     }

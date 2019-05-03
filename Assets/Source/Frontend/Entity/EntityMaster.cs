@@ -23,7 +23,7 @@ namespace Frontend.Entity {
             } 
         }
         void Awake() {
-            Master = new LootQuest.Logic.Entity.Master(Name, new LootQuest.Models.Common.Attributes(10, 10, 10, 10));
+            Master = new LootQuest.Logic.Entity.Master(Name, new LootQuest.Models.Common.Attributes(10, 10, 10, 1000));
             Master.AddRepresentable(this);
             BattleMaster = gameObject.GetComponent<EntityBattleMaster>();
         }

@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 2
   type: 1
   itemName: Simple Helmet
-  actionGraph: {fileID: 11400000, guid: f515cb686ae9f364ba112ae3c4eefb0b, type: 2}
+  actionGraph: {fileID: 11400000, guid: 228786194cf45244b99eb237d28dcfa3, type: 2}
   Strength: 1
   Intelligence: 1
   Dexterity: 1

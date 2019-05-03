@@ -48,7 +48,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  number: 2
+  number: 10
   result: 
 --- !u!114 &114871191199636196
 MonoBehaviour:
@@ -74,6 +74,7 @@ MonoBehaviour:
     - output
     - Effects
     - WindupEffects
+    - Aura
     values:
     - _fieldName: hitCondition
       _node: {fileID: 114871191199636196}
@@ -155,6 +156,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: Aura
+      _node: {fileID: 114871191199636196}
+      _typeQualifiedName: Tools.Aura.Nodes.AuraMasterNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   id: -1
   hitCondition: 
   didHit: 
@@ -164,6 +174,7 @@ MonoBehaviour:
   Effects:
   - {fileID: 8141683122858218996, guid: 0040b4983bf639547a4d1e214bdca100, type: 3}
   - {fileID: 9097870108949374315, guid: 7b06109ceb04ba64598aa742c85baec7, type: 3}
+  Aura: {fileID: 0}
   valueCalculationRaw: 
   calculatedValue: 
   type: 0
@@ -228,6 +239,7 @@ MonoBehaviour:
   ports:
     keys:
     - 0
+    - This
     values:
     - _fieldName: 0
       _node: {fileID: 9119210837349551062}
@@ -241,6 +253,16 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 1
       _dynamic: 1
+    - _fieldName: This
+      _node: {fileID: 9119210837349551062}
+      _typeQualifiedName: Tools.ActionBuilder.Nodes.ActionNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   ActionIcon: {fileID: 21300000, guid: 71f1fd3376fb82743a656d520e30805b, type: 3}
   actionName: Flat Strike 2
   actionDescription: 
+  This: {fileID: 0}

@@ -3,6 +3,7 @@ namespace LootQuest.Models.Action.Aura {
         public CasterType Caster { get; private set; }
         public CompletionConditionType Type { get; private set; }
         public string Value { get; private set; }
+        public LootQuest.Logic.Entity.Commanders.BattleCommander.BattleHandler EventHandler;
 
         public CompletionCondition(CasterType caster, CompletionConditionType type, string value) {
             Caster = caster;

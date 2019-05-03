@@ -4,6 +4,8 @@ namespace LootQuest.Models.Action.Aura {
         ActionsUsed,
         DamageTaken,
         DamageActionsTaken,
+        AuraDamageTaken,
+        AuraDamageActionsTaken,
         DamageInflicted
     }
 }

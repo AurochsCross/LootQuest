@@ -4,19 +4,6 @@ using LootQuest.Logic.Actions;
 
 namespace LootQuest.Logic.Game.Commanders {
     public class BattleCommander {
-
-        #region Event
-
-        public delegate void BattleHandler(object myObject, Models.Events.BattlePawnArgs args);
-        public event BattleHandler OnDamageTaken;
-        public event BattleHandler OnHealingTaken;
-
-        public delegate void EffectHandler(object myObject, Models.Events.EffectExecutionArgs args);
-        public event EffectHandler BeganEffectExecution;
-        public event EffectHandler FinishedEffectExecution;
-
-        #endregion
-
         public Logic.Entity.Commanders.BattleCommander[] Commanders { get; private set; }
 
         private Logic.Game.Master _master;
@@ -70,6 +57,8 @@ namespace LootQuest.Logic.Game.Commanders {
                     subject.TakeDamage((int)value);
                 } else if (effect.type == LootQuest.Models.Action.EffectType.Heal) {
                     subject.TakeHealing((int)value);
+                } else if (effect.type == LootQuest.Models.Action.EffectType.Aura) {
+                    subject.AddAura(effect.Aura);
                 }
 
                 return true;
