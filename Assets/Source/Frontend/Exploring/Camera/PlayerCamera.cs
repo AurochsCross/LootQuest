@@ -22,13 +22,8 @@ namespace Frontend.Exploring.Camera {
         }
         private CameraState _state = CameraState.Explore;
 
-        private bool isBattleState = false;
-
         void Awake() {
             Shared = this;
-
-            Debug.Log("Angle: " + Vector3.Angle(new Vector3(1f, 0, 0), new Vector3(-1f, 0, 0)));
-            Debug.Log("Angle: " + Vector3.Angle(new Vector3(1f, 0, 0), new Vector3(1f, 0, 0)));
         }
 
         void Start() {
@@ -36,7 +31,9 @@ namespace Frontend.Exploring.Camera {
         }
 
         void Update() {
-            transform.position = PlayerTransform.position + CameraOffset;
+            if (_state == CameraState.Explore) {
+                transform.position = PlayerTransform.position + CameraOffset;
+            }
 
             if (Input.GetKeyDown(KeyCode.Z)) {
                 ApplyExploreState();

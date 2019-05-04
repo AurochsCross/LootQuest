@@ -13,6 +13,7 @@ namespace Tools.Aura.Nodes {
         public bool OverridesHealing = false;
         [Input] public string HealingOverrideFormula;
         [Output] public AuraMasterNode Triggers;
+        public GameObject AuraRepresentationEffect;
 
         [ContextMenu("Set as main")]
         void SetMain() {

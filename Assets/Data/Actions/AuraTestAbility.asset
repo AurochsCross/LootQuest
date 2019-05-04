@@ -126,7 +126,7 @@ MonoBehaviour:
   valueCalculationRaw: 
   calculatedValue: 
   type: 2
-  subject: 0
+  subject: 1
   typeIndex: 2
   output:
     id: 0

@@ -15,6 +15,7 @@ namespace LootQuest.Logic.Entity.Commanders {
 
         public delegate void EffectHandler(object myObject, Models.Events.EffectExecutionArgs args);
         public event EffectHandler OnEffectExecution;
+        public event EffectHandler OnAuraPlaced;
         
         private List<Logic.Actions.AuraHandler> _activeAuras = new List<Logic.Actions.AuraHandler>();
 
@@ -47,6 +48,10 @@ namespace LootQuest.Logic.Entity.Commanders {
             var auraHandler = new Actions.AuraHandler(aura, this, _battleMaster.GetOtherCommander(this));
             auraHandler.SetupAura();
             _activeAuras.Add(auraHandler);
+
+            if (OnAuraPlaced != null) {
+                OnAuraPlaced(auraHandler, null);
+            }
         }
 
         public void RemoveAura(Actions.AuraHandler auraHandler) {

@@ -37,12 +37,15 @@ namespace Frontend.Exploring {
         public void DisableMovement() {
             _navigationAgent.isStopped = true;
             _isEnabled = false;
+            _navigationAgent.enabled = false;
         }
 
         public void EnableMovement() {
-            _navigationAgent.destination = transform.position;
             _navigationAgent.isStopped = false;
             _isEnabled = true;
+            _navigationAgent.enabled = true;
+            _navigationAgent.Warp(transform.position);
+            //_navigationAgent.destination = transform.position;
         }
 
         private void HandleMoveSelection(Vector2 mousePosition) {

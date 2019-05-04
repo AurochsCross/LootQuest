@@ -5,6 +5,7 @@ namespace Frontend.Entity {
     public class EntityEffectMaster: MonoBehaviour {
         public void Setup() {
             gameObject.GetComponent<EntityMaster>().Master.BattleCommander.OnEffectExecution += OnActionEffect;
+            gameObject.GetComponent<EntityMaster>().Master.BattleCommander.OnAuraPlaced += OnAuraPlaced;
         }
 
         private void OnActionEffect(object sender, LootQuest.Models.Events.EffectExecutionArgs args) {
@@ -21,6 +22,18 @@ namespace Frontend.Entity {
                     battleEffect.Setup(transform, Frontend.Master.Shared.BattleManager.Participants.Where(y => y != null).First(y => y.Master == args.Subject).transform);
                 }
             });
+        }
+
+        private void OnAuraPlaced(object sender, LootQuest.Models.Events.EffectExecutionArgs args) {
+            if (sender is LootQuest.Logic.Actions.AuraHandler) {
+                var auraHandler = sender as LootQuest.Logic.Actions.AuraHandler;
+                var effect = auraHandler.Aura.GetRepresentable<Tools.Aura.AuraGraph>().MasterNode.AuraRepresentationEffect;
+
+                if (effect != null) {
+                    var effectGO = Instantiate(effect) as GameObject;
+                    effectGO.GetComponent<Effects.Aura.AuraEffectBase>().Setup(auraHandler);
+                }
+            }
         }
     }
 }

@@ -14,5 +14,18 @@ namespace Frontend {
         void Awake() {
             Shared = this;
         }
+
+        public void ReadyForBattle() {
+            Camera.gameObject.SetActive(false);
+            Movement.DisableMovement();
+            Debug.Log("Camera should be dissabled: " + Camera.gameObject.activeInHierarchy);
+        }
+
+        public void ReadyForExploring() {
+            Camera.gameObject.SetActive(true);
+            Movement.EnableMovement();
+            Camera.State = Exploring.Camera.CameraState.Explore;
+            Debug.Log("Camera should be enabled: " + Camera.gameObject.activeInHierarchy);
+        }
     }
 }

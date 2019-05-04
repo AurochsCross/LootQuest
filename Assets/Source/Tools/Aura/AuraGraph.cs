@@ -34,6 +34,8 @@ namespace Tools.Aura {
                 aura.AddHealingOverride(MasterNode.GetInputValue<string>("HealingOverrideFormula", MasterNode.HealingOverrideFormula));
             }
 
+            aura.AddRepresentable(this);
+
             return aura;
         }
 
@@ -54,6 +56,11 @@ namespace Tools.Aura {
             return MasterNode.GetInputPort(portName).GetConnections()
                 .Where(x => x.node is Nodes.CompletionConditions.CompletionCondition)
                 .Select(x => (Nodes.CompletionConditions.CompletionCondition)x.node ).ToList();
+        }
+
+        [ContextMenu("Test graph")]
+        private void TestGraph() {
+            ConvertToModel();
         }
     }
 }

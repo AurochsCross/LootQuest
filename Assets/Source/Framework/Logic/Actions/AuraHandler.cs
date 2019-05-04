@@ -5,17 +5,18 @@ using LootQuest.Models.Action.Aura;
 namespace LootQuest.Logic.Actions {
     public class AuraHandler {
         #region Events
-        public delegate void AuraEventHandler(object sender, Models.Events.BattlePawnArgs args);
+        public delegate void AuraEventHandler(object sender, Models.Events.AuraEventArgs args);
         public AuraEventHandler OnAuraDamageActionTaken;
         public AuraEventHandler OnAuraDamageTaken;
         public AuraEventHandler OnCreation;
         public AuraEventHandler OnDestruction;
         public AuraEventHandler OnCompletion;
         public AuraEventHandler OnTimer;
+        public AuraEventHandler OnTrigger;
 
         #endregion
-        private Models.Action.Aura.AuraRoot _aura;
-        private Logic.Entity.Commanders.BattleCommander _caster;
+        public Models.Action.Aura.AuraRoot Aura { get; private set; }
+        public Logic.Entity.Commanders.BattleCommander Caster { get; private set; }
         private Logic.Entity.Commanders.BattleCommander _other;
         private Dictionary<CasterType, Dictionary<CompletionConditionType, int>> _completionCounters;
         private Dictionary<TriggerType, List<Trigger>> _triggers = new Dictionary<TriggerType, List<Trigger>>() {
@@ -29,23 +30,23 @@ namespace LootQuest.Logic.Actions {
         };
 
         public AuraHandler(Models.Action.Aura.AuraRoot aura, Logic.Entity.Commanders.BattleCommander caster, Logic.Entity.Commanders.BattleCommander other) {
-            _aura = aura;
-            _caster = caster;
+            Aura = aura;
+            Caster = caster;
             _other = other;
         }
 
         public int TakeDamage(int amount) {
             if (OnAuraDamageActionTaken != null) {
-                OnAuraDamageActionTaken(this, new Models.Events.BattlePawnArgs(1));
+                OnAuraDamageActionTaken(this, new Models.Events.AuraEventArgs(1));
             }
 
             if (OnAuraDamageTaken != null) {
-                OnAuraDamageTaken(this, new Models.Events.BattlePawnArgs(amount));
+                OnAuraDamageTaken(this, new Models.Events.AuraEventArgs(amount));
             }
 
-            if (_aura.IsOverridingDamage) {
-                string calculationString = _aura.DamageOverride.Replace("[a:damage]", amount.ToString());
-                int calculatedValue = (int)Helpers.ActionCalculationHelper.CalculateValue(calculationString, null, _caster, _other);
+            if (Aura.IsOverridingDamage) {
+                string calculationString = Aura.DamageOverride.Replace("[a:damage]", amount.ToString());
+                int calculatedValue = (int)Helpers.ActionCalculationHelper.CalculateValue(calculationString, null, Caster, _other);
                 return calculatedValue;
             }
             
@@ -53,9 +54,9 @@ namespace LootQuest.Logic.Actions {
         }
 
         public int TakeHealing(int amount) {
-            if (_aura.IsOverridingHealing) {
-                string calculationString = _aura.HealingOverride.Replace("[a:healing]", amount.ToString());
-                int calculatedValue = (int)Helpers.ActionCalculationHelper.CalculateValue(calculationString, null, _caster, _other);
+            if (Aura.IsOverridingHealing) {
+                string calculationString = Aura.HealingOverride.Replace("[a:healing]", amount.ToString());
+                int calculatedValue = (int)Helpers.ActionCalculationHelper.CalculateValue(calculationString, null, Caster, _other);
                 return calculatedValue;
             }
 
@@ -74,10 +75,10 @@ namespace LootQuest.Logic.Actions {
         #region Completions
         private void SetupCompletionConditionsSubscription() {
             SetupCompletionCounters();
-            foreach (var condition in _aura.CompletionConditions) {
+            foreach (var condition in Aura.CompletionConditions) {
                 SetupCompletionConditionSubscription(condition);
             }
-            foreach (var condition in _aura.DestroyConditions) {
+            foreach (var condition in Aura.DestroyConditions) {
                 SetupCompletionConditionSubscription(condition, true);
             }
         }
@@ -90,15 +91,13 @@ namespace LootQuest.Logic.Actions {
                     break;
                 }
                 case CompletionConditionType.AuraDamageActionsTaken: {
-                    condition.EventHandler = (object sender, Models.Events.BattlePawnArgs args) => SetupConditionEventHandling(condition, args.Amount, isDestroy);
-                    OnAuraDamageActionTaken += ((object obj, Models.Events.BattlePawnArgs args) => {
+                    OnAuraDamageActionTaken += ((object obj, Models.Events.AuraEventArgs args) => {
                         SetupConditionEventHandling(condition, args.Amount, isDestroy);
                     });
                     break;
                 }
                 case CompletionConditionType.AuraDamageTaken: {
-                    condition.EventHandler = (object sender, Models.Events.BattlePawnArgs args) => SetupConditionEventHandling(condition, args.Amount, isDestroy);
-                    OnAuraDamageTaken += ((object obj, Models.Events.BattlePawnArgs args) => {
+                    OnAuraDamageTaken += ((object obj, Models.Events.AuraEventArgs args) => {
                         SetupConditionEventHandling(condition, args.Amount, isDestroy);
                     });
                     break;
@@ -121,10 +120,10 @@ namespace LootQuest.Logic.Actions {
         }
 
         private void UnsubscribeCompletionConditions() {
-            foreach (var condition in _aura.CompletionConditions) {
+            foreach (var condition in Aura.CompletionConditions) {
                 UnsubscribeCompletionCondition(condition);
             }
-            foreach (var condition in _aura.DestroyConditions) {
+            foreach (var condition in Aura.DestroyConditions) {
                 UnsubscribeCompletionCondition(condition);
             }
         }
@@ -136,13 +135,13 @@ namespace LootQuest.Logic.Actions {
                     break;
                 }
                 case CompletionConditionType.AuraDamageActionsTaken: {
-                    OnAuraDamageActionTaken -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                    OnAuraDamageActionTaken -= ((object obj, Models.Events.AuraEventArgs args) => {
                         SetupConditionEventHandling(condition, args.Amount, false);
                     });
                     break;
                 }
                 case CompletionConditionType.AuraDamageTaken: {
-                    OnAuraDamageTaken -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                    OnAuraDamageTaken -= ((object obj, Models.Events.AuraEventArgs args) => {
                         SetupConditionEventHandling(condition, args.Amount, false);
                     });
                     break;
@@ -205,50 +204,45 @@ namespace LootQuest.Logic.Actions {
 
         #region Triggers
         private void SetupTriggers() {
-            foreach (var trigger in _aura.Triggers) {
+            foreach (var trigger in Aura.Triggers) {
 
                 switch (trigger.Type) {
                     case TriggerType.OnAuraDamageTaken: {
-                        trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        OnAuraDamageTaken += ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnAuraDamageTaken += ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnDamageTaken: {
                         trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        _caster.OnDamageTaken += trigger.EventHandler;
+                        Caster.OnDamageTaken += trigger.EventHandler;
                         break;
                     }
                     case TriggerType.OnCreation: {
-                        trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        OnCreation += ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnCreation += ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnCompletion: {
-                        trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        OnCompletion += ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnCompletion += ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnDestruction: {
-                        trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        OnDestruction += ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnDestruction += ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnHealingTaken: {
                         trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        _caster.OnHealingTaken += trigger.EventHandler;
+                        Caster.OnHealingTaken += trigger.EventHandler;
                         break;
                     }
                     case TriggerType.OnRepeatingTimer: {
-                        trigger.EventHandler = ((object obj, Models.Events.BattlePawnArgs args) => ExecuteTrigger(trigger, args.Amount));
-                        OnTimer += ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnTimer += ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
@@ -258,43 +252,43 @@ namespace LootQuest.Logic.Actions {
         }
 
         private void UnsubscribeTriggerEvents() {
-            foreach (var trigger in _aura.Triggers) {
+            foreach (var trigger in Aura.Triggers) {
 
                 switch (trigger.Type) {
                     case TriggerType.OnAuraDamageTaken: {
-                        OnAuraDamageTaken -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnAuraDamageTaken -= ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnDamageTaken: {
-                        _caster.OnDamageTaken -= trigger.EventHandler;
+                        Caster.OnDamageTaken -= trigger.EventHandler;
                         break;
                     }
                     case TriggerType.OnCreation: {
-                        OnCreation -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnCreation -= ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnCompletion: {
-                        OnCompletion -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnCompletion -= ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnDestruction: {
-                        OnDestruction -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnDestruction -= ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
                     }
                     case TriggerType.OnHealingTaken: {
-                        _caster.OnHealingTaken -= trigger.EventHandler;
+                        Caster.OnHealingTaken -= trigger.EventHandler;
                         break;
                     }
                     case TriggerType.OnRepeatingTimer: {
-                        OnTimer -= ((object obj, Models.Events.BattlePawnArgs args) => {
+                        OnTimer -= ((object obj, Models.Events.AuraEventArgs args) => {
                             ExecuteTrigger(trigger, args.Amount);
                         });
                         break;
@@ -304,23 +298,29 @@ namespace LootQuest.Logic.Actions {
         }
 
         private void ExecuteTrigger(Trigger trigger, int value) {
-            foreach (var effect in trigger.TriggeredAction.effects) {
-                effect.valueCalculation = effect.originalValueCalculation.Replace("[trigger:value]", value.ToString());
+            if (trigger.TriggeredAction != null) {
+                foreach (var effect in trigger.TriggeredAction.effects) {
+                    effect.valueCalculation = effect.originalValueCalculation.Replace("[trigger:value]", value.ToString());
+                }
+                Caster.UseAction(trigger.TriggeredAction);
             }
-            _caster.UseAction(trigger.TriggeredAction);
+
+            if (OnTrigger != null) {
+                OnTrigger(this, new Models.Events.AuraEventArgs(trigger.Type));
+            }
         }
 
         #endregion
         
         #endregion
 
-        private void OnCompleted(object sender, Models.Events.BattlePawnArgs args) {
-            _caster.RemoveAura(this);
+        private void OnCompleted(object sender, Models.Events.AuraEventArgs args) {
+            Caster.RemoveAura(this);
             Cleanup();
         }
 
-        private void OnDestroyed(object sender, Models.Events.BattlePawnArgs args) {
-            _caster.RemoveAura(this);
+        private void OnDestroyed(object sender, Models.Events.AuraEventArgs args) {
+            Caster.RemoveAura(this);
             Cleanup();
         }
 
@@ -331,7 +331,7 @@ namespace LootQuest.Logic.Actions {
 
         private Logic.Entity.Commanders.BattleCommander AffectedFromCasterType(CasterType type) {
             if (type == CasterType.Self)
-                return _caster;
+                return Caster;
 
             return _other;
         }
