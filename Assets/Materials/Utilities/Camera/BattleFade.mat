@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_New Shader Graph
+  m_Name: BattleFade
   m_Shader: {fileID: -6465566751694194690, guid: 43002cd18cbc29646b04006a5377c18f,
     type: 3}
   m_ShaderKeywords: 
