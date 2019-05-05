@@ -15,7 +15,7 @@ namespace LootQuest.Logic.Utilities {
 
         public static float CurrentTime {
             get {
-                return (float)Time.Instance._stopwatch.Elapsed.Milliseconds / 1000f;
+                return (float)Time.Instance._stopwatch.Elapsed.TotalMilliseconds / 1000f;
             }
         }
         

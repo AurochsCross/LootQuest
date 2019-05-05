@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 0
   type: 3
   itemName: Broken Pants
-  actionGraph: {fileID: 11400000, guid: 13a8c958dec3998468ea930e6716486c, type: 2}
+  actionGraph: {fileID: 11400000, guid: 297e741999bc2db4b9d8509ef1d89c2b, type: 2}
   Strength: 1
   Intelligence: 1
   Dexterity: 1

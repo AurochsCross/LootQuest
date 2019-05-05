@@ -11,6 +11,7 @@ namespace Tools.Aura.Nodes {
         public LootQuest.Models.Action.Aura.TriggerType Type;
         [Output] public Trigger OnTrigger;
         [Output] public string Value;
+        public float RepeatTime;
 
         public override object GetValue(NodePort port) {
             if (port.fieldName == "OnTrigger") 

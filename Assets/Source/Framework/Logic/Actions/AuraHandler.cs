@@ -29,6 +29,9 @@ namespace LootQuest.Logic.Actions {
             { TriggerType.OnRepeatingTimer, new List<Trigger>() }
         };
 
+        private bool _isActive = true;
+
+        private List<Utilities.Timer> _timers = new List<Utilities.Timer>();
         public AuraHandler(Models.Action.Aura.AuraRoot aura, Logic.Entity.Commanders.BattleCommander caster, Logic.Entity.Commanders.BattleCommander other) {
             Aura = aura;
             Caster = caster;
@@ -36,6 +39,9 @@ namespace LootQuest.Logic.Actions {
         }
 
         public int TakeDamage(int amount) {
+            if (!_isActive)
+                return amount;
+
             if (OnAuraDamageActionTaken != null) {
                 OnAuraDamageActionTaken(this, new Models.Events.AuraEventArgs(1));
             }
@@ -54,6 +60,9 @@ namespace LootQuest.Logic.Actions {
         }
 
         public int TakeHealing(int amount) {
+            if (!_isActive)
+                return amount;
+
             if (Aura.IsOverridingHealing) {
                 string calculationString = Aura.HealingOverride.Replace("[a:healing]", amount.ToString());
                 int calculatedValue = (int)Helpers.ActionCalculationHelper.CalculateValue(calculationString, null, Caster, _other);
@@ -113,7 +122,19 @@ namespace LootQuest.Logic.Actions {
                     break;
                 }
                 case CompletionConditionType.Time: {
-                    System.Console.WriteLine("Not implemented");
+                    var timer = new Utilities.Timer(int.Parse(condition.Value), false);
+                    timer.OnTimer += (object sender) => SetupConditionEventHandling(condition, 1000, isDestroy);
+                    _timers.Add(timer);
+                    // System.Timers.Timer timer = new System.Timers.Timer();
+                    // timer.Interval = double.Parse(condition.Value) * 1000.0;
+                    // System.Timers.ElapsedEventHandler handler = (object sender, System.Timers.ElapsedEventArgs args) => SetupConditionEventHandling(condition, 1000, isDestroy);
+                    // timer.Elapsed += handler;
+                    // timer.Enabled = true;
+                    // if (_timers.ContainsKey(timer)) {
+                    //     _timers[timer].Add(handler);
+                    // } else {
+                    //     _timers.Add(timer, new List<System.Timers.ElapsedEventHandler>() { handler });
+                    // }
                     break;
                 }
             }
@@ -125,6 +146,10 @@ namespace LootQuest.Logic.Actions {
             }
             foreach (var condition in Aura.DestroyConditions) {
                 UnsubscribeCompletionCondition(condition);
+            }
+
+            foreach (var timer in _timers) {
+                timer.Dispose();
             }
         }
 
@@ -162,8 +187,11 @@ namespace LootQuest.Logic.Actions {
         }
 
         private void SetupConditionEventHandling(CompletionCondition condition, int amount, bool isDestroy = false) {
-            _completionCounters[condition.Caster][condition.Type] += amount;
-            if (_completionCounters[condition.Caster][condition.Type] >= int.Parse(condition.Value)) {
+            if(condition.Type != CompletionConditionType.Time) {
+                _completionCounters[condition.Caster][condition.Type] += amount;
+            }
+
+            if (condition.Type == CompletionConditionType.Time || _completionCounters[condition.Caster][condition.Type] >= int.Parse(condition.Value)) {
                 if (isDestroy) {
                     if (OnDestruction != null) {
                         OnDestruction(this, null);
@@ -242,9 +270,9 @@ namespace LootQuest.Logic.Actions {
                         break;
                     }
                     case TriggerType.OnRepeatingTimer: {
-                        OnTimer += ((object obj, Models.Events.AuraEventArgs args) => {
-                            ExecuteTrigger(trigger, args.Amount);
-                        });
+                        var timer = new Utilities.Timer(trigger.TriggerTime, true);
+                        timer.OnTimer += (object sender) => ExecuteTrigger(trigger, 0);
+                        _timers.Add(timer);
                         break;
                     }
                 }
@@ -298,6 +326,9 @@ namespace LootQuest.Logic.Actions {
         }
 
         private void ExecuteTrigger(Trigger trigger, int value) {
+            if (!_isActive)
+                return;
+
             if (trigger.TriggeredAction != null) {
                 foreach (var effect in trigger.TriggeredAction.effects) {
                     effect.valueCalculation = effect.originalValueCalculation.Replace("[trigger:value]", value.ToString());
@@ -315,11 +346,13 @@ namespace LootQuest.Logic.Actions {
         #endregion
 
         private void OnCompleted(object sender, Models.Events.AuraEventArgs args) {
+            _isActive = false;
             Caster.RemoveAura(this);
             Cleanup();
         }
 
         private void OnDestroyed(object sender, Models.Events.AuraEventArgs args) {
+            _isActive = false;
             Caster.RemoveAura(this);
             Cleanup();
         }

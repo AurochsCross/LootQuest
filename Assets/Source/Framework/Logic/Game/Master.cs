@@ -4,12 +4,10 @@ namespace LootQuest.Logic.Game {
     public class Master {
 
         #region Events 
-
         public delegate void EncounterHandler(object myObject, Models.Events.EncounterArgs args);
         public event EncounterHandler OnEncounterStarted;
 
         #endregion
-
         public Entity.Master PlayerMaster { get; private set; }
         
         public Commanders.BattleCommander CurrentBattleCommander { get; private set; }

@@ -22,7 +22,7 @@ namespace Tools.Aura {
             }).ToList();
 
             var triggers = GetTriggers().Select(x => {
-                return new LootQuest.Models.Action.Aura.Trigger(x.Type, x.GetActionRoot());
+                return new LootQuest.Models.Action.Aura.Trigger(x.Type, x.GetActionRoot(), x.RepeatTime);
             }).ToList();
 
             var aura = new LootQuest.Models.Action.Aura.AuraRoot(completionConditions, destroyConditions, triggers);
