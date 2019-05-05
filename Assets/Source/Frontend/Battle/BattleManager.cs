@@ -10,12 +10,14 @@ namespace Frontend.Battle {
         public Entity.EntityMaster[] Participants { get; private set; }
         public UI.BattleUI BattleUI;
         public BattleArenaManager ArenaManager;
+        public BattlePreparationCamera PreparationCamera;
+        private bool _isWaitingForBattle = false;
 
         void Start() {
-            gameObject.GetComponent<Master>().GameMaster.OnEncounterStarted += StartBattle;
+            gameObject.GetComponent<Master>().GameMaster.OnEncounterStarted += SetupBattle;
         }
 
-        public void StartBattle(object sender, LootQuest.Models.Events.EncounterArgs args) {
+        public void SetupBattle(object sender, LootQuest.Models.Events.EncounterArgs args) {
             IsBattleActive = true;
             Participants = args.EncounterParticipatns.Select(x =>  { 
                 Debug.Log("Select: " + x.Name);
@@ -35,9 +37,49 @@ namespace Frontend.Battle {
                 participant.BattleMaster.ReadyForBattle();
                 participant.Master.BattleCommander.OnDeath += FinishBattle;
             }
-            
-            BattleUI.Setup(player, npcs.First());
+
+            PreparationCamera.gameObject.SetActive(true);
+            PreparationCamera.AnimateFade(npcs.First(), FadeFinished);
+        }
+
+        private void FadeFinished() {
+            Entity.EntityMaster player = null;
+            List<Entity.EntityMaster> npcs = new List<Entity.EntityMaster>();
+
+            foreach (var participant in Participants) {
+                if (participant.IsPlayer) {
+                    player = participant;
+                } else {
+                    npcs.Add(participant);
+                }
+            }
             ArenaManager.Setup(new List<Entity.EntityMaster>() {player, npcs.First()});
+
+            _isWaitingForBattle = true;
+
+        }
+        void Update() {
+            if (_isWaitingForBattle && Input.GetMouseButtonDown(0)) {
+                _isWaitingForBattle = false;
+                PreparationCamera.AnimateUnfade(ArenaManager, StartBattle);
+            }   
+        }
+
+        public void StartBattle() {
+            Entity.EntityMaster player = null;
+            List<Entity.EntityMaster> npcs = new List<Entity.EntityMaster>();
+
+            foreach (var participant in Participants) {
+                if (participant.IsPlayer) {
+                    player = participant;
+                } else {
+                    npcs.Add(participant);
+                }
+                participant.BattleMaster.StartBattle();
+            }
+
+            PreparationCamera.gameObject.SetActive(false);
+            BattleUI.Setup(player, npcs.First());
             BattleUI.IsVisible = true;
         }
 

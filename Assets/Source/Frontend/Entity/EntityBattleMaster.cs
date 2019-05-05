@@ -17,7 +17,9 @@ namespace Frontend.Entity {
             gameObject.GetComponent<EntityEffectMaster>().Setup();
             gameObject.GetComponent<EntityMaster>().Master.BattleCommander.OnDamageTaken += OnDamageTaken;
             gameObject.GetComponent<EntityMaster>().Master.BattleCommander.OnDeath += OnDeath;
+        }
 
+        public void StartBattle() {
             if (_behaviourExecutor != null) {
                 _behaviourExecutor.PrepareForExecution();
             }
