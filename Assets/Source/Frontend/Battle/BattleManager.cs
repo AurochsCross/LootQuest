@@ -10,7 +10,7 @@ namespace Frontend.Battle {
         public Entity.EntityMaster[] Participants { get; private set; }
         public UI.BattleUI BattleUI;
         public BattleArenaManager ArenaManager;
-        public BattlePreparationCamera PreparationCamera;
+        public Cameras.BattlePreparationCamera PreparationCamera;
         private bool _isWaitingForBattle = false;
 
         void Start() {

@@ -10,6 +10,7 @@ namespace Frontend.Entity {
         public string Name;
         public LootQuest.Logic.Entity.Master Master { get; private set; }
         public EntityBattleMaster BattleMaster { get; private set; }
+        public Animations.AnimationManager AnimationManager { get; private set; }
         public bool IsPlayer { get { return gameObject.GetComponent<Frontend.PlayerMaster>() != null; } }
 
         public Dictionary<LootQuest.Models.Items.ArmorItem, Models.Items.ArmorItem>  ArmorEntities { 
@@ -26,6 +27,7 @@ namespace Frontend.Entity {
             Master = new LootQuest.Logic.Entity.Master(Name, new LootQuest.Models.Common.Attributes(10, 10, 10, 1000));
             Master.AddRepresentable(this);
             BattleMaster = gameObject.GetComponent<EntityBattleMaster>();
+            AnimationManager = gameObject.GetComponent<Animations.AnimationManager>();
         }
 
         void Start() {

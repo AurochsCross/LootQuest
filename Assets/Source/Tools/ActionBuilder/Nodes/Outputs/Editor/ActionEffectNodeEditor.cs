@@ -42,9 +42,10 @@ namespace Tools.ActionBuilder.Nodes {
             node.Delay = EditorGUILayout.FloatField(node.Delay);
             GUILayout.EndHorizontal();
 
-
-            DrawEffectArray(node);
-            DrawWindupEffectArray(node);
+            NodeEditorGUILayout.PortField(node.GetInputPort("WindupEffects"));
+            NodeEditorGUILayout.PortField(node.GetInputPort("Effects"));
+            // DrawEffectArray(node);
+            // DrawWindupEffectArray(node);
 
             if (node.type == EffectType.Aura) {
                 foreach (var connection in node.GetPort("hitCondition").GetConnections()) {
@@ -73,62 +74,65 @@ namespace Tools.ActionBuilder.Nodes {
         private bool _showEffects = false;
 
         private void DrawEffectArray(ActionEffectNode node) {
-            if (node.Effects == null) {
-                node.Effects = new List<GameObject>();
-            }
+                // TODO: Implement new effect system
+            // if (node.Effects == null) {
+            //     node.Effects = new List<GameObject>();
+            // }
             
-            _showEffects = EditorGUILayout.Foldout(_showEffects, "Effects");
-            if (!_showEffects) {
-                return;
-            }
+            // _showEffects = EditorGUILayout.Foldout(_showEffects, "Effects");
+            // if (!_showEffects) {
+            //     return;
+            // }
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Count: ");
-            int capacity = EditorGUILayout.IntField(node.Effects.Capacity);
+            // GUILayout.BeginHorizontal();
+            // GUILayout.Label("Count: ");
+            // int capacity = EditorGUILayout.IntField(node.Effects.Capacity);
 
-            if (capacity < node.Effects.Count)
-                node.Effects.RemoveRange(capacity, node.Effects.Count - capacity);
-            node.Effects.Capacity = capacity;
-            GUILayout.EndHorizontal();
+            // if (capacity < node.Effects.Count)
+            //     node.Effects.RemoveRange(capacity, node.Effects.Count - capacity);
+            // node.Effects.Capacity = capacity;
+            // GUILayout.EndHorizontal();
 
-            for (int i = 0; i < node.Effects.Capacity; i++) {
-                if (i < node.Effects.Count) {
-                    node.Effects[i] = EditorGUILayout.ObjectField(node.Effects[i], typeof(GameObject)) as GameObject ?? null;
-                } else {
-                    GameObject temp = EditorGUILayout.ObjectField((GameObject)null, typeof(GameObject)) as GameObject;
-                    if (temp != null) {
-                        node.Effects.Add(temp);
-                    }
-                }
-            }
+            // for (int i = 0; i < node.Effects.Capacity; i++) {
+            //     if (i < node.Effects.Count) {
+            //         node.Effects[i] = EditorGUILayout.ObjectField(node.Effects[i], typeof(GameObject)) as GameObject ?? null;
+            //     } else {
+            //         GameObject temp = EditorGUILayout.ObjectField((GameObject)null, typeof(GameObject)) as GameObject;
+            //         if (temp != null) {
+            //             node.Effects.Add(temp);
+            //         }
+            //     }
+            // }
         }
 
         private bool _showWindupEffects = false;
         private void DrawWindupEffectArray(ActionEffectNode node) {
-            _showWindupEffects = EditorGUILayout.Foldout(_showWindupEffects, "Windup Effects");
-            if (!_showWindupEffects) {
-                return;
-            }
+                // TODO: Implement new effect system
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Count: ");
-            int capacity = EditorGUILayout.IntField(node.WindupEffects.Capacity);
+            // _showWindupEffects = EditorGUILayout.Foldout(_showWindupEffects, "Windup Effects");
+            // if (!_showWindupEffects) {
+            //     return;
+            // }
 
-            if (capacity < node.WindupEffects.Count)
-                node.WindupEffects.RemoveRange(capacity, node.WindupEffects.Count - capacity);
-            node.WindupEffects.Capacity = capacity;
-            GUILayout.EndHorizontal();
+            // GUILayout.BeginHorizontal();
+            // GUILayout.Label("Count: ");
+            // int capacity = EditorGUILayout.IntField(node.WindupEffects.Capacity);
 
-            for (int i = 0; i < node.WindupEffects.Capacity; i++) {
-                if (i < node.WindupEffects.Count) {
-                    node.WindupEffects[i] = EditorGUILayout.ObjectField(node.WindupEffects[i], typeof(GameObject)) as GameObject ?? null;
-                } else {
-                    GameObject temp = EditorGUILayout.ObjectField((GameObject)null, typeof(GameObject)) as GameObject;
-                    if (temp != null) {
-                        node.WindupEffects.Add(temp);
-                    }
-                }
-            }
+            // if (capacity < node.WindupEffects.Count)
+            //     node.WindupEffects.RemoveRange(capacity, node.WindupEffects.Count - capacity);
+            // node.WindupEffects.Capacity = capacity;
+            // GUILayout.EndHorizontal();
+
+            // for (int i = 0; i < node.WindupEffects.Capacity; i++) {
+            //     if (i < node.WindupEffects.Count) {
+            //         node.WindupEffects[i] = EditorGUILayout.ObjectField(node.WindupEffects[i], typeof(GameObject)) as GameObject ?? null;
+            //     } else {
+            //         GameObject temp = EditorGUILayout.ObjectField((GameObject)null, typeof(GameObject)) as GameObject;
+            //         if (temp != null) {
+            //             node.WindupEffects.Add(temp);
+            //         }
+            //     }
+            // }
         }
     }
 }

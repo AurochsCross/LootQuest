@@ -16,8 +16,8 @@ namespace Tools.ActionBuilder.Nodes {
         [Input] public string valueCalculation;
 
         public float Delay = 0f;
-        [Input] public List<GameObject> WindupEffects;
-        [Input] public List<GameObject> Effects;
+        [Input] public ActionVisualEffect WindupEffects;
+        [Input] public ActionVisualEffect Effects;
         [Input] public Aura.Nodes.AuraMasterNode Aura;
         [Output] public string valueCalculationRaw;
         [Output] public string calculatedValue;
@@ -65,6 +65,14 @@ namespace Tools.ActionBuilder.Nodes {
             } else {
                 return new ActionEffect(id, hitConditionValue, (GetInputValue<Aura.Nodes.AuraMasterNode>("Aura", Aura).graph as Tools.Aura.AuraGraph).ConvertToModel(), subject, Delay);
             }
+        }
+
+        public List<ActionVisualEffect> GetWindupEffects() {
+            return this.GetInputPort("WindupEffects").GetConnections().Select(x => x.node as ActionVisualEffect).ToList();
+        }
+
+        public List<ActionVisualEffect> GetEffects() {
+            return this.GetInputPort("Effects").GetConnections().Select(x => x.node as ActionVisualEffect).ToList();
         }
 
     }

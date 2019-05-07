@@ -12,14 +12,27 @@ namespace Frontend.Entity {
             var actionGraph = args.Action.GetRepresentable<Tools.ActionBuilder.Nodes.ActionNode>();
             var effect = actionGraph.GetEffectNodes()[args.EffectIndex];
             
-            var effectTemplates = args.IsWindupEffect ? effect.WindupEffects : effect.Effects;
+            var effectTemplates = args.IsWindupEffect ? effect.GetWindupEffects() : effect.GetEffects();
+
+
+            Debug.Log("Templates: ");
+            foreach (var temp in effectTemplates) {
+                Debug.Log(temp.TriggerName);
+            }
+            // TODO: Implement new effect system
 
             effectTemplates.ForEach(x => {
                 if (x != null) {
-                    var effectGO = Instantiate(x) as GameObject;
-                    var battleEffect = effectGO.GetComponent<Battle.Effects.BattleEffect>();
+                    var visualEffect = x as Tools.ActionBuilder.Nodes.ActionVisualEffect;
+                    if (visualEffect.Type == Tools.ActionBuilder.Nodes.ActionVisualEffectType.AnimationTrigger || visualEffect.Type == Tools.ActionBuilder.Nodes.ActionVisualEffectType.SimpleAnimationTrigger) {
+                        args.Source.GetRepresentable<Entity.EntityMaster>().AnimationManager.SetTrigger(visualEffect.TriggerName);
+                    }
 
-                    battleEffect.Setup(transform, Frontend.Master.Shared.BattleManager.Participants.Where(y => y != null).First(y => y.Master == args.Subject).transform);
+
+                    // var effectGO = Instantiate(x) as GameObject;
+                    // var battleEffect = effectGO.GetComponent<Battle.Effects.BattleEffect>();
+
+                    // battleEffect.Setup(transform, Frontend.Master.Shared.BattleManager.Participants.Where(y => y != null).First(y => y.Master == args.Subject).transform);
                 }
             });
         }

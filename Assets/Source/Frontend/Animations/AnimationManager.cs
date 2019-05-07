@@ -7,8 +7,8 @@ namespace Frontend.Animations {
         public Animator MainAnimator;
         public int SimpleAttackAnimationCount = 1;
 
-        public virtual void PlaySimpleAttack(int index = 0) {
-            MainAnimator.Play(string.Format("Attack_{0}", index));
+        public virtual void PlaySimpleAttack() {
+            MainAnimator.SetTrigger(AnimationConfig.SimpleAnimationType.SimpleAttack.ToName());
         }
 
         public virtual void PlayTakeDamage(int index = 0) {
@@ -17,11 +17,16 @@ namespace Frontend.Animations {
         }
 
         public virtual void PlayGetReadyForBattleAnimation() {
+            MainAnimator.SetTrigger(AnimationConfig.SimpleAnimationType.ReadyForBattle.ToName());
             MainAnimator.Play("GetReadyForBattle");
         }
 
         public virtual void PlayDeathAnimation() {
-            MainAnimator.Play("Death");
+            MainAnimator.SetTrigger(AnimationConfig.SimpleAnimationType.Death.ToName());
+        }
+
+        public virtual void SetTrigger(string triggerName) {
+            MainAnimator.SetTrigger(triggerName);
         }
     }
 }

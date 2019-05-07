@@ -15,6 +15,7 @@ namespace Frontend.Battle {
         public bool IsDefault = false;
         public Transform[] PlacementMarkers;
         public Camera BattleCamera;
+        public Cameras.BattlePreparationArenaBackgroundCamera BackgroundCamera;
 
         private List<Frontend.Entity.EntityMaster> _participants;
         private ParticipantWorldData[] _participantWorldData;
@@ -39,6 +40,7 @@ namespace Frontend.Battle {
                     Rotation = entities[i].transform.eulerAngles
                 };
                 entities[i].transform.position = PlacementMarkers[i].position;
+                entities[i].transform.LookAt(PlacementMarkers[PlacementMarkers.Length - i - 1]);
             }
 
             BattleCamera.gameObject.SetActive(true);

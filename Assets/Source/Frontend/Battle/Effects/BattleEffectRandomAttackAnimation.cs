@@ -8,7 +8,7 @@ namespace Frontend.Battle.Effects {
             var animationManager = gameObject.GetComponent<BattleEffect>()?.Source?.GetComponent<Frontend.Animations.AnimationManager>();
 
             int animationIndex = Random.Range(0, animationManager.SimpleAttackAnimationCount);
-            animationManager.PlaySimpleAttack(animationIndex);
+            animationManager.PlaySimpleAttack();
         }
     }
 }
