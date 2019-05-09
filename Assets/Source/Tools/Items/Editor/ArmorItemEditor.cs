@@ -11,7 +11,7 @@ namespace Tools.Items
     {
 
         [SerializeField]
-        Tools.ActionBuilder.AbilityGraph actionGraph;
+        Tools.Action.ActionGraph actionGraph;
 
         public override void OnInspectorGUI()
         {
@@ -24,7 +24,7 @@ namespace Tools.Items
             DrawCharacteristics(armor);
             EditorGUILayout.Separator();
 
-            armor.actionGraph = (Tools.ActionBuilder.AbilityGraph)EditorGUILayout.ObjectField(armor.actionGraph, typeof(Tools.ActionBuilder.AbilityGraph), false);
+            armor.actionGraph = (Tools.Action.ActionGraph)EditorGUILayout.ObjectField(armor.actionGraph, typeof(Tools.Action.ActionGraph), false);
         }
 
         private static void DrawInformation(ArmorItem armor)

@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7524549066333088066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033899569c410c49b823ed78eff56a7, type: 3}
+  m_Name: Aura Refference
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1160, y: -136}
+  ports:
+    keys:
+    - Aura
+    values:
+    - _fieldName: Aura
+      _node: {fileID: -7524549066333088066}
+      _typeQualifiedName: Tools.Aura.AuraMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Aura
+        node: {fileID: 5279148371321528467}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Graph: {fileID: 11400000, guid: 538ec4685ed7aaf408e477c02e2d1837, type: 2}
+  Aura: {fileID: 0}
+--- !u!114 &-2918970403960759315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793a5b6e731dcf5499cc20ec4131685e, type: 3}
+  m_Name: Action Master
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -552, y: -216}
+  ports:
+    keys:
+    - This
+    - 0
+    values:
+    - _fieldName: This
+      _node: {fileID: -2918970403960759315}
+      _typeQualifiedName: Tools.Action.ActionMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 0
+      _node: {fileID: -2918970403960759315}
+      _typeQualifiedName: LootQuest.Models.Action.ActionEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 5279148371321528467}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+  ActionIcon: {fileID: 21300000, guid: 5d345e3b78ea0474ab9408d15a2412ce, type: 3}
+  actionName: Healing Aura
+  actionDescription: 
+  This: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910a3e43dac94764aaeb428e8b481217, type: 3}
+  m_Name: HealingAura
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -2918970403960759315}
+  - {fileID: 5279148371321528467}
+  - {fileID: -7524549066333088066}
+  Icon: {fileID: 0}
+--- !u!114 &5279148371321528467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ab8cadd9d32854cbd513609918fe6e, type: 3}
+  m_Name: Action Effect
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -824, y: -184}
+  ports:
+    keys:
+    - hitCondition
+    - didHit
+    - valueCalculation
+    - WindupEffects
+    - Effects
+    - Aura
+    - valueCalculationRaw
+    - calculatedValue
+    - output
+    values:
+    - _fieldName: hitCondition
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: didHit
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: valueCalculation
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: WindupEffects
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: Tools.Action.ActionVisualEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Effects
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: Tools.Action.ActionVisualEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Aura
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: Tools.Aura.AuraMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Aura
+        node: {fileID: -7524549066333088066}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: valueCalculationRaw
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: calculatedValue
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 5279148371321528467}
+      _typeQualifiedName: LootQuest.Models.Action.ActionEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 0
+        node: {fileID: -2918970403960759315}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 0
+  hitCondition: 
+  didHit: 
+  valueCalculation: 
+  Delay: 0
+  WindupEffects: {fileID: 0}
+  Effects: {fileID: 0}
+  Aura: {fileID: 0}
+  valueCalculationRaw: 
+  calculatedValue: 
+  type: 2
+  subject: 0
+  typeIndex: 2
+  output:
+    id: 0
+    type: 0
+    subject: 0
+    hitCalculation: 
+    valueCalculation: 
+    Delay: 0
+    didHit: 0
+    calculatedValue: 0

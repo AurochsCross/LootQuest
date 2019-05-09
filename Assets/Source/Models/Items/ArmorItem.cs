@@ -15,7 +15,7 @@ namespace Models.Items {
                 return new LootQuest.Models.Common.Attributes(Strength, Dexterity, Intelligence);
             }
         }
-        public Tools.ActionBuilder.AbilityGraph actionGraph;
+        public Tools.Action.ActionGraph actionGraph;
 
         public int Strength = 0;
         public int Intelligence = 0;

@@ -48,8 +48,8 @@ namespace Frontend.NPC {
                     Debug.Log("Wait time: " + waitNode.Time);
                     yield return new WaitForSeconds(waitNode.Time);
                     //await System.Threading.Tasks.Task.Delay((int)(waitNode.Time * 1000));
-                } else if (currentNode is Tools.HostileBehaviour.Nodes.Actions.BehaviourActionUse) {
-                    var actionNode = currentNode as Tools.HostileBehaviour.Nodes.Actions.BehaviourActionUse;
+                } else if (currentNode is Tools.Common.BehaviourActionUse) {
+                    var actionNode = currentNode as Tools.Common.BehaviourActionUse;
                     _battleMaster.UseAction(actionNode.GetActionNode().GetAction());
                 } else {
                     didReachedEnd = true;

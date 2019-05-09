@@ -5,9 +5,9 @@ using XNode;
 using System.Linq;
 
 namespace Tools.Aura {
-    [CreateAssetMenu(menuName = "Tools/Abiities/Aura Graph")]
+    [CreateAssetMenu(menuName = "LootQuest/Graphs/Aura")]
     public class AuraGraph : NodeGraph {
-        public Nodes.AuraMasterNode MasterNode = null;
+        public AuraMaster MasterNode = null;
 
         public LootQuest.Models.Action.Aura.AuraRoot ConvertToModel() {
             if (MasterNode == null)
@@ -40,22 +40,22 @@ namespace Tools.Aura {
         }
 
 
-        private List<Nodes.Trigger> GetTriggers() {
-            return MasterNode.GetOutputPort("Triggers").GetConnections().Where(x => x.node is Nodes.Trigger).Select(x => x.node as Nodes.Trigger).ToList();
+        private List<Trigger> GetTriggers() {
+            return MasterNode.GetOutputPort("Triggers").GetConnections().Where(x => x.node is Trigger).Select(x => x.node as Trigger).ToList();
         }
 
-        private List<Nodes.CompletionConditions.CompletionCondition> GetCompletionConditionNodes() {
+        private List<CompletionCondition> GetCompletionConditionNodes() {
             return GetCompletionNodesByPort("CompletionConditions");
         }
 
-        private List<Nodes.CompletionConditions.CompletionCondition> GetDestroyNodes() {
+        private List<CompletionCondition> GetDestroyNodes() {
             return GetCompletionNodesByPort("DestroyConditions");
         }
  
-        private List<Nodes.CompletionConditions.CompletionCondition> GetCompletionNodesByPort(string portName) {
+        private List<CompletionCondition> GetCompletionNodesByPort(string portName) {
             return MasterNode.GetInputPort(portName).GetConnections()
-                .Where(x => x.node is Nodes.CompletionConditions.CompletionCondition)
-                .Select(x => (Nodes.CompletionConditions.CompletionCondition)x.node ).ToList();
+                .Where(x => x.node is CompletionCondition)
+                .Select(x => (CompletionCondition)x.node ).ToList();
         }
 
         [ContextMenu("Test graph")]

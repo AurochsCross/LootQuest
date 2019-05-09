@@ -10,7 +10,7 @@ namespace Frontend.Inventory {
             Items.Add(item);
         }
 
-        public Tools.ActionBuilder.AbilityGraph GetAction(int id) {
+        public Tools.Action.ActionGraph GetAction(int id) {
             //Items.ForEach( x => Debug.Log(x.actionGraph.Id) );
             var a = Items.Where(x => x.actionGraph != null && x.actionGraph.GetInstanceID() == id).ToList();
             var b = a.Select(x => x.actionGraph).ToList();

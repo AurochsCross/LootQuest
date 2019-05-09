@@ -7,6 +7,7 @@ namespace Frontend.Entity {
     [RequireComponent(typeof(EntityBattleMaster))]
     [RequireComponent(typeof(Animations.AnimationManager))]
     public class EntityMaster: MonoBehaviour {
+        public int Hp = 1000;
         public string Name;
         public LootQuest.Logic.Entity.Master Master { get; private set; }
         public EntityBattleMaster BattleMaster { get; private set; }
@@ -24,7 +25,7 @@ namespace Frontend.Entity {
             } 
         }
         void Awake() {
-            Master = new LootQuest.Logic.Entity.Master(Name, new LootQuest.Models.Common.Attributes(10, 10, 10, 1000));
+            Master = new LootQuest.Logic.Entity.Master(Name, new LootQuest.Models.Common.Attributes(10, 10, 10, Hp));
             Master.AddRepresentable(this);
             BattleMaster = gameObject.GetComponent<EntityBattleMaster>();
             AnimationManager = gameObject.GetComponent<Animations.AnimationManager>();

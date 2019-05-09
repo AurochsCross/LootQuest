@@ -1,0 +1,477 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1859704282729712735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793a5b6e731dcf5499cc20ec4131685e, type: 3}
+  m_Name: Action Master
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -344, y: -328}
+  ports:
+    keys:
+    - This
+    - 0
+    values:
+    - _fieldName: This
+      _node: {fileID: -1859704282729712735}
+      _typeQualifiedName: Tools.Action.ActionMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Action
+        node: {fileID: 7203450307786416240}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: 0
+      _node: {fileID: -1859704282729712735}
+      _typeQualifiedName: LootQuest.Models.Action.ActionEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 2738123027185882146}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+  ActionIcon: {fileID: 0}
+  actionName: 
+  actionDescription: 
+  This: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335660b0c1f184e4f8eeb00979f41955, type: 3}
+  m_Name: PoisonFlask
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 1818287050254013518}
+  - {fileID: 6604852296595481490}
+  - {fileID: 444133923293788024}
+  - {fileID: 7203450307786416240}
+  - {fileID: -1859704282729712735}
+  - {fileID: 2738123027185882146}
+  - {fileID: 5052199455612311864}
+  MasterNode: {fileID: 0}
+--- !u!114 &444133923293788024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b44a6253b9c1c24a8fb52035cc1b32a, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -568, y: 24}
+  ports:
+    keys:
+    - Master
+    - OnTrigger
+    - Value
+    values:
+    - _fieldName: Master
+      _node: {fileID: 444133923293788024}
+      _typeQualifiedName: Tools.Aura.AuraMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Triggers
+        node: {fileID: 1818287050254013518}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: OnTrigger
+      _node: {fileID: 444133923293788024}
+      _typeQualifiedName: Tools.Aura.Trigger, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: Execute
+        node: {fileID: 7203450307786416240}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Value
+      _node: {fileID: 444133923293788024}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Master: {fileID: 0}
+  Type: 4
+  OnTrigger: {fileID: 0}
+  Value: 
+  RepeatTime: 0.5
+--- !u!114 &1818287050254013518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42620e7d48770fc4197142be3dd38893, type: 3}
+  m_Name: Aura Master
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -824, y: 24}
+  ports:
+    keys:
+    - CompletionConditions
+    - DestroyConditions
+    - DamageOverrideFormula
+    - HealingOverrideFormula
+    - Triggers
+    values:
+    - _fieldName: CompletionConditions
+      _node: {fileID: 1818287050254013518}
+      _typeQualifiedName: Tools.Aura.CompletionCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Condition
+        node: {fileID: 6604852296595481490}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: DestroyConditions
+      _node: {fileID: 1818287050254013518}
+      _typeQualifiedName: Tools.Aura.CompletionCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: DamageOverrideFormula
+      _node: {fileID: 1818287050254013518}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: HealingOverrideFormula
+      _node: {fileID: 1818287050254013518}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Triggers
+      _node: {fileID: 1818287050254013518}
+      _typeQualifiedName: Tools.Aura.AuraMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Master
+        node: {fileID: 444133923293788024}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  CompletionConditions: {fileID: 0}
+  DestroyConditions: {fileID: 0}
+  OverridesDamage: 0
+  DamageOverrideFormula: 
+  OverridesHealing: 0
+  HealingOverrideFormula: 
+  Triggers: {fileID: 0}
+  AuraRepresentationEffect: {fileID: 201565088781290995, guid: 6639f725f69fec841bb0321e2c505bcc,
+    type: 3}
+--- !u!114 &2738123027185882146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ab8cadd9d32854cbd513609918fe6e, type: 3}
+  m_Name: Action Effect
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -616, y: -424}
+  ports:
+    keys:
+    - hitCondition
+    - didHit
+    - valueCalculation
+    - WindupEffects
+    - Effects
+    - Aura
+    - valueCalculationRaw
+    - calculatedValue
+    - output
+    values:
+    - _fieldName: hitCondition
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: didHit
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: valueCalculation
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: result
+        node: {fileID: 5052199455612311864}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: WindupEffects
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: Tools.Action.ActionVisualEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Effects
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: Tools.Action.ActionVisualEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Aura
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: Tools.Aura.AuraMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: valueCalculationRaw
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: calculatedValue
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 2738123027185882146}
+      _typeQualifiedName: LootQuest.Models.Action.ActionEffect, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: 0
+        node: {fileID: -1859704282729712735}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 0
+  hitCondition: 
+  didHit: 
+  valueCalculation: 
+  Delay: 0
+  WindupEffects: {fileID: 0}
+  Effects: {fileID: 0}
+  Aura: {fileID: 0}
+  valueCalculationRaw: 
+  calculatedValue: 
+  type: 0
+  subject: 0
+  typeIndex: 0
+  output:
+    id: 0
+    type: 0
+    subject: 0
+    hitCalculation: 
+    valueCalculation: 
+    Delay: 0
+    didHit: 0
+    calculatedValue: 0
+--- !u!114 &5052199455612311864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb1a7392cf75d8547821bffabe08882b, type: 3}
+  m_Name: Number
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -872, y: -280}
+  ports:
+    keys:
+    - result
+    values:
+    - _fieldName: result
+      _node: {fileID: 5052199455612311864}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: valueCalculation
+        node: {fileID: 2738123027185882146}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  number: 1
+  result: 
+--- !u!114 &6604852296595481490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8fc98628aab1d438e2620f8eb22afc, type: 3}
+  m_Name: Completion Condition
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1160, y: -24}
+  ports:
+    keys:
+    - Value
+    - Condition
+    values:
+    - _fieldName: Value
+      _node: {fileID: 6604852296595481490}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Condition
+      _node: {fileID: 6604852296595481490}
+      _typeQualifiedName: Tools.Aura.CompletionCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: CompletionConditions
+        node: {fileID: 1818287050254013518}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Type: 0
+  Caster: 0
+  Value: 5
+  Condition: {fileID: 0}
+--- !u!114 &7203450307786416240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecacb42f5656c3f4d86208477cccba68, type: 3}
+  m_Name: Behaviour Action Use
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -40, y: 40}
+  ports:
+    keys:
+    - Action
+    - Execute
+    - Next
+    values:
+    - _fieldName: Action
+      _node: {fileID: 7203450307786416240}
+      _typeQualifiedName: Tools.Action.ActionMaster, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: This
+        node: {fileID: -1859704282729712735}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Execute
+      _node: {fileID: 7203450307786416240}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp-firstpass, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: OnTrigger
+        node: {fileID: 444133923293788024}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Next
+      _node: {fileID: 7203450307786416240}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp-firstpass, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Action: {fileID: 0}
+  Execute: {fileID: 0}
+  Next: {fileID: 0}

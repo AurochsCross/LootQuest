@@ -46,7 +46,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: Action
       _node: {fileID: -2618549956977194749}
-      _typeQualifiedName: Tools.ActionBuilder.Nodes.ActionNode, Assembly-CSharp, Version=0.0.0.0,
+      _typeQualifiedName: Tools.Action.ActionMaster, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Action
@@ -91,14 +91,14 @@ MonoBehaviour:
   m_Name: Behaviour Action Input
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -600, y: -264}
+  position: {x: -648, y: -264}
   ports:
     keys:
     - Action
     values:
     - _fieldName: Action
       _node: {fileID: 3599353172846363100}
-      _typeQualifiedName: Tools.ActionBuilder.Nodes.ActionNode, Assembly-CSharp, Version=0.0.0.0,
+      _typeQualifiedName: Tools.Action.ActionMaster, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Action
@@ -108,7 +108,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  Graph: {fileID: 11400000, guid: 7efff0e45de541f46bb57d25ddfbc09c, type: 2}
+  Graph: {fileID: 11400000, guid: 3e97f42ecdc304c448063b80cf239a47, type: 2}
   Action: {fileID: 0}
 --- !u!114 &4979911491109441047
 MonoBehaviour:

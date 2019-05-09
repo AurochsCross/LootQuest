@@ -75,7 +75,7 @@ namespace Frontend.Battle.UI {
         private void AddPlayerActionButton(Entity.EntityMaster entity, LootQuest.Models.Action.ActionRoot action) {
             var button = Instantiate(ActionButtonTemplate) as GameObject;
             button.transform.SetParent(ActionButtonContainers[_actionButtonCount]);
-            button.GetComponent<ActionButton>().Setup(action.GetRepresentable<Tools.ActionBuilder.Nodes.ActionNode>().ActionIcon);
+            button.GetComponent<ActionButton>().Setup(action.GetRepresentable<Tools.Action.ActionMaster>().ActionIcon);
             button.GetComponent<Button>().onClick.AddListener(delegate { entity.BattleMaster.UseAction(action); } );
 
             _actionButtonCount++;

@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 1
   type: 2
   itemName: Normal Body
-  actionGraph: {fileID: 11400000, guid: 7efff0e45de541f46bb57d25ddfbc09c, type: 2}
+  actionGraph: {fileID: 11400000, guid: bb96267e2d74c4544a820e402aa22af1, type: 2}
   Strength: 1
   Intelligence: 1
   Dexterity: 1

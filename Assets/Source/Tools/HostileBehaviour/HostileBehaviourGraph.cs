@@ -5,7 +5,7 @@ using XNode;
 using System.Linq;
 
 namespace Tools.HostileBehaviour {
-    [CreateAssetMenu(menuName = "Tools/Behaviours/Hostile Behaviour")]
+    [CreateAssetMenu(menuName = "LootQuest/Graphs/Hostile Behaviour")]
     public class HostileBehaviourGraph : NodeGraph { 
         
         public Nodes.BehaviourStart BehaviourStart {
@@ -24,7 +24,7 @@ namespace Tools.HostileBehaviour {
             Node currentNode = BehaviourStart.GetOutputPort("Next").GetConnection(0).node;
             //List<LootQuest.Models.Action.ActionRoot> actions = new List<LootQuest.Models.Action.ActionRoot>();
             
-            var actionNodes = nodes.Where(x => x is Nodes.Actions.BehaviourActionUse).Select(x => ((Nodes.Actions.BehaviourActionUse)x).GetActionNode().GetAction()).ToList();
+            var actionNodes = nodes.Where(x => x is Common.BehaviourActionUse).Select(x => ((Common.BehaviourActionUse)x).GetActionNode().GetAction()).ToList();
             return actionNodes;
         }
         

@@ -9,7 +9,7 @@ namespace Frontend.Entity {
         }
 
         private void OnActionEffect(object sender, LootQuest.Models.Events.EffectExecutionArgs args) {
-            var actionGraph = args.Action.GetRepresentable<Tools.ActionBuilder.Nodes.ActionNode>();
+            var actionGraph = args.Action.GetRepresentable<Tools.Action.ActionMaster>();
             var effect = actionGraph.GetEffectNodes()[args.EffectIndex];
             
             var effectTemplates = args.IsWindupEffect ? effect.GetWindupEffects() : effect.GetEffects();
@@ -23,8 +23,8 @@ namespace Frontend.Entity {
 
             effectTemplates.ForEach(x => {
                 if (x != null) {
-                    var visualEffect = x as Tools.ActionBuilder.Nodes.ActionVisualEffect;
-                    if (visualEffect.Type == Tools.ActionBuilder.Nodes.ActionVisualEffectType.AnimationTrigger || visualEffect.Type == Tools.ActionBuilder.Nodes.ActionVisualEffectType.SimpleAnimationTrigger) {
+                    var visualEffect = x as Tools.Action.ActionVisualEffect;
+                    if (visualEffect.Type == Tools.Action.ActionVisualEffectType.AnimationTrigger || visualEffect.Type == Tools.Action.ActionVisualEffectType.SimpleAnimationTrigger) {
                         args.Source.GetRepresentable<Entity.EntityMaster>().AnimationManager.SetTrigger(visualEffect.TriggerName);
                     }
 
